@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile and launch C++",
+            "type": "shell",
+            "command": "cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ && cmake --build build && ./build/sem1 in/vstup1.txt out/vystup.svg 800x600",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "clear": true
+            }
+        }
+    ]
+}
