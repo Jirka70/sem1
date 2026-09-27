@@ -3,18 +3,18 @@
 
 #include <Scene.hpp>
 #include <command/ICommand.hpp>
-#include <shape/Shape.hpp>
 #include <validation/Validation.hpp>
+#include <shape/Line.hpp>
 
 class DrawLineCommand final : public ICommand {
 public:
-    explicit DrawLineCommand(const Line args)
+    explicit DrawLineCommand(const Line& args)
         : args_(args) {
-        require_validation(lineSchema, args_);
+        require_validation(lineSchema, LineArgs{args.start(), args.end()});
     }
 
     void execute(Scene& scene) const override {
-        scene.add(args_);
+        scene.add(std::make_unique<Line>(args_));
     }
 
 private:

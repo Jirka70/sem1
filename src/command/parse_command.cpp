@@ -23,7 +23,7 @@ std::unique_ptr<DrawCircleCommand> parse_circle_command(const Tokens& validated_
     const auto& circle_parameters = std::span<const std::string_view>{validated_tokens}
         .subspan(PARAM_START_INDEX);
 
-    const Circle circle{
+    const CircleArgs args = CircleArgs{
         .center = {
             .x = parse_number<double>(circle_parameters[0]).value(),
             .y = parse_number<double>(circle_parameters[1]).value()
@@ -31,7 +31,9 @@ std::unique_ptr<DrawCircleCommand> parse_circle_command(const Tokens& validated_
         .radius = parse_number<double>(circle_parameters[2]).value()
     };
 
-    require_validation(circleSchema, circle);
+    require_validation(circleSchema, args);
+
+    const Circle circle{args};
 
     return std::make_unique<DrawCircleCommand>(circle);
 }
@@ -42,7 +44,8 @@ std::unique_ptr<DrawLineCommand> parse_line_command(const Tokens& validated_toke
     const auto parameters = std::span<const std::string_view>{validated_tokens}
         .subspan(PARAM_START_INDEX);
 
-    const Line line{
+    
+    const LineArgs args = LineArgs{
         .start = {
             .x = parse_number<double>(parameters[0]).value(),
             .y = parse_number<double>(parameters[1]).value()
@@ -53,8 +56,9 @@ std::unique_ptr<DrawLineCommand> parse_line_command(const Tokens& validated_toke
         }
     };
 
-    require_validation(lineSchema, line);
+    require_validation(lineSchema, args);
 
+    const Line line{args};    
     return std::make_unique<DrawLineCommand>(line);
 }
 
@@ -71,16 +75,18 @@ std::unique_ptr<DrawRectangleCommand> parse_rectangle_command(const Tokens& vali
     const double right = left + width;
     const double bottom = top + height;
 
-    const Rectangle rectangle{
+    const RectangleArgs args = RectangleArgs{
         .corners = {
-            Point{.x = left, .y = top},
-            Point{.x = right, .y = top},
-            Point{.x = right, .y = bottom},
-            Point{.x = left, .y = bottom}
+            Vector2D{.x = left, .y = top},
+            Vector2D{.x = right, .y = top},
+            Vector2D{.x = right, .y = bottom},
+            Vector2D{.x = left, .y = bottom}
         }
     };
 
-    require_validation(rectangleSchema, rectangle);
+    require_validation(rectangleSchema, args);
+
+    const Rectangle rectangle{args};
 
     return std::make_unique<DrawRectangleCommand>(rectangle);
 }

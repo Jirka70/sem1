@@ -1,17 +1,17 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
-#include <shape/Shape.hpp>
 #include <iostream>
 #include <vector>
+#include "shape/IShape.hpp"
 
 class Scene {
 public:
-    void add(const Shape& shape);
-    const std::vector<Shape>& shapes() const noexcept;
+    void add(std::unique_ptr<IShape> shape);
+    const std::vector<std::unique_ptr<IShape>>& shapes() const noexcept;
 
 private:
-    std::vector<Shape> shapes_;
+    std::vector<std::unique_ptr<IShape>> shapes_;
 };
 
 #endif

@@ -1,20 +1,20 @@
-#ifndef CIRCLE_HPP
-#define CIRCLE_HPP
+#ifndef LINE_HPP
+#define LINE_HPP
 
 #include <shape/IShape.hpp>
 #include <shape/ShapeArgs.hpp>
 
 #include <memory>
 
-class Circle final : public IShape {
+class Line final : public IShape {
 public:
-    Circle(CircleArgs args);
+    Line(LineArgs args);
 
     [[nodiscard]]
-    Vector2D center() const;
+    Vector2D start() const;
 
     [[nodiscard]]
-    double radius() const;
+    Vector2D end() const;
 
     [[nodiscard]]
     std::unique_ptr<IShape> operator+(Vector2D offset) const override;
@@ -29,7 +29,7 @@ public:
     std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:
-    CircleArgs args_{};
+    LineArgs args_{};
 };
 
 #endif

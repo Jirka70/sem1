@@ -1,20 +1,19 @@
-#ifndef CIRCLE_HPP
-#define CIRCLE_HPP
+#ifndef RECTANGLE_HPP
+#define RECTANGLE_HPP
 
 #include <shape/IShape.hpp>
 #include <shape/ShapeArgs.hpp>
 
+#include <array>
 #include <memory>
 
-class Circle final : public IShape {
+class Rectangle final : public IShape {
 public:
-    Circle(CircleArgs args);
+    Rectangle(RectangleArgs args);
+    using Corners = std::array<Vector2D, RECTANGLE_SIDES_COUNT>;
 
     [[nodiscard]]
-    Vector2D center() const;
-
-    [[nodiscard]]
-    double radius() const;
+    const Corners& corners() const;
 
     [[nodiscard]]
     std::unique_ptr<IShape> operator+(Vector2D offset) const override;
@@ -29,7 +28,7 @@ public:
     std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:
-    CircleArgs args_{};
+    RectangleArgs args_{};
 };
 
 #endif

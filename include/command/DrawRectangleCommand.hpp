@@ -3,18 +3,18 @@
 
 #include <Scene.hpp>
 #include <command/ICommand.hpp>
-#include <shape/Shape.hpp>
 #include <validation/Validation.hpp>
+#include <shape/Rectangle.hpp>
 
 class DrawRectangleCommand final : public ICommand {
 public:
-    explicit DrawRectangleCommand(const Rectangle args)
+    explicit DrawRectangleCommand(const Rectangle& args)
         : args_(args) {
-        require_validation(rectangleSchema, args_);
+        require_validation(rectangleSchema, RectangleArgs{args.corners()});
     }
 
     void execute(Scene& scene) const override {
-        scene.add(args_);
+        scene.add(std::make_unique<Rectangle>(args_));
     }
 
 private:
