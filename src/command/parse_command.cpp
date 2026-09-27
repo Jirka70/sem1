@@ -13,6 +13,12 @@
 #include <command/DrawCircleCommand.hpp>
 #include <command/DrawLineCommand.hpp>
 #include <command/DrawRectangleCommand.hpp>
+#include <command/TranslateCommand.hpp>
+#include <validation/schema/tokens/translateTokensSchema.hpp>
+#include <command/RotateCommand.hpp>
+#include <validation/schema/tokens/rotateTokensSchema.hpp>
+#include <command/ScaleCommand.hpp>
+#include <validation/schema/tokens/scaleTokensSchema.hpp>
 
 
 constexpr size_t PARAM_START_INDEX = 1;
@@ -91,11 +97,84 @@ std::unique_ptr<DrawRectangleCommand> parse_rectangle_command(const Tokens& vali
     return std::make_unique<DrawRectangleCommand>(rectangle);
 }
 
-static const std::unordered_map<std::string_view, CommandFactory> factories{
+std::unique_ptr<TranslateCommand> parse_translate_command(const Tokens& validated_tokens) {
+    require_validation(translateTokensSchema, validated_tokens);
+
+    const auto parameters =
+        std::span<const std::string_view>{validated_tokens}
+            .subspan(PARAM_START_INDEX);
+
+    const Vector2D args = Vector2D{
+        .x = static_cast<double>(
+            parse_number<int>(parameters[0]).value()
+        ),
+        .y = static_cast<double>(
+            parse_number<int>(parameters[1]).value()
+        )
+    };
+
+    require_validation(vectorSchema, args);
+
+    return std::make_unique<TranslateCommand>(args);
+}
+
+std::unique_ptr<RotateCommand> parse_rotate_command(const Tokens& validated_tokens) {
+    require_validation(rotateTokensSchema, validated_tokens);
+
+    const auto parameters =
+        std::span<const std::string_view>{validated_tokens}
+            .subspan(PARAM_START_INDEX);
+
+    const RotationArgs args = RotationArgs{
+        .center = {
+            .x = static_cast<double>(
+                parse_number<int>(parameters[0]).value()
+            ),
+            .y = static_cast<double>(
+                parse_number<int>(parameters[1]).value()
+            )
+        },
+        .angleDegrees = parse_number<double>(parameters[2]).value()
+    };
+
+    require_validation(rotationSchema, args);
+
+    return std::make_unique<RotateCommand>(args);
+}
+
+std::unique_ptr<ScaleCommand> parse_scale_command(const Tokens& validated_tokens) {
+    require_validation(scaleTokensSchema, validated_tokens);
+
+    const auto parameters =
+        std::span<const std::string_view>{validated_tokens}
+            .subspan(PARAM_START_INDEX);
+
+    const ScaleArgs args = ScaleArgs{
+        .center = {
+            .x = static_cast<double>(
+                parse_number<int>(parameters[0]).value()
+            ),
+            .y = static_cast<double>(
+                parse_number<int>(parameters[1]).value()
+            )
+        },
+        .factor = parse_number<double>(parameters[2]).value()
+    };
+
+    require_validation(scaleSchema, args);
+
+    return std::make_unique<ScaleCommand>(args);
+}
+
+static const std::unordered_map<std::string_view, CommandFactory>factories{
     {"circle", parse_circle_command},
     {"line", parse_line_command},
-    {"rect", parse_rectangle_command}
+    {"rect", parse_rectangle_command},
+    {"translate", parse_translate_command},
+    {"rotate", parse_rotate_command},
+    {"scale", parse_scale_command}
 };
+
 
 std::unique_ptr<ICommand> parse_command(std::string_view line, size_t line_number) {
     Tokens tokens = tokenize(line);
