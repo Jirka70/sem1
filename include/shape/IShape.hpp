@@ -2,10 +2,10 @@
 #define I_SHAPE_HPP
 
 #include <shape/ShapeArgs.hpp>
+#include <shape/Rotation.hpp>
 
 #include <memory>
 
-class Rotation;
 
 class IShape {
 public:

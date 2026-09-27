@@ -6,26 +6,46 @@ Rectangle::Rectangle(RectangleArgs args) : args_(args) {
 }
 
 const Rectangle::Corners& Rectangle::corners() const {
-    // TODO: Doplnit implementaci.
     return args_.corners;
 }
 
-std::unique_ptr<IShape> Rectangle::operator+(Vector2D) const {
-    // TODO: Doplnit implementaci.
-    return nullptr;
+std::unique_ptr<IShape> Rectangle::operator+(Vector2D offset) const {
+    require_validation(vectorSchema, offset);
+
+    RectangleArgs result = args_;
+
+    for (Vector2D& corner : result.corners) {
+        corner.x += offset.x;
+        corner.y += offset.y;
+    }
+
+    return std::make_unique<Rectangle>(result);
 }
 
-std::unique_ptr<IShape> Rectangle::operator-(Vector2D) const {
-    // TODO: Doplnit implementaci.
-    return nullptr;
+std::unique_ptr<IShape> Rectangle::operator-(Vector2D offset) const {
+    require_validation(vectorSchema, offset);
+    return *this + Vector2D{-offset.x, -offset.y};
 }
 
-std::unique_ptr<IShape> Rectangle::operator*(Vector2D) const {
-    // TODO: Doplnit implementaci.
-    return nullptr;
+std::unique_ptr<IShape> Rectangle::operator*(Vector2D factors) const {
+    require_validation(scaleFactorsSchema, factors);
+
+    RectangleArgs result = args_;
+
+    for (Vector2D& corner : result.corners) {
+        corner.x *= factors.x;
+        corner.y *= factors.y;
+    }
+
+    return std::make_unique<Rectangle>(result);
 }
 
-std::unique_ptr<IShape> Rectangle::rotate(const Rotation&) const {
-    // TODO: Doplnit implementaci.
-    return nullptr;
+std::unique_ptr<IShape> Rectangle::rotate(const Rotation& rotation) const {
+    RectangleArgs result = args_;
+
+    for (Vector2D& corner : result.corners) {
+        corner = rotation.apply(corner);
+    }
+
+    return std::make_unique<Rectangle>(result);
 }
