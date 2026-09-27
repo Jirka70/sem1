@@ -5,7 +5,6 @@
 #include <command/ICommand.hpp>
 #include <shape/Shape.hpp>
 #include <validation/Validation.hpp>
-#include <validation/schema/shape/lineSchema.hpp>
 
 class DrawLineCommand final : public ICommand {
 public:

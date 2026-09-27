@@ -4,13 +4,13 @@
 #include <command/ICommand.hpp>
 #include <validation/Validation.hpp>
 #include <Scene.hpp>
-#include <validation/schema/shape/circleSchema.hpp>
+#include <validation/schema/geometrySchemas.hpp>
 
 
 class DrawCircleCommand final : public ICommand {
 public: 
-    explicit DrawCircleCommand(const Circle args) : args_(args) {
-        require_validation(circleSchema, args_);
+    explicit DrawCircleCommand(const Circle& args) : args_(args) {
+        require_validation(circleSchema, CircleArgs{ args.center, args.radius });
     }
 
     void execute(Scene& scene) const override {

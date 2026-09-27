@@ -5,7 +5,6 @@
 #include <command/ICommand.hpp>
 #include <shape/Shape.hpp>
 #include <validation/Validation.hpp>
-#include <validation/schema/shape/rectangleSchema.hpp>
 
 class DrawRectangleCommand final : public ICommand {
 public:

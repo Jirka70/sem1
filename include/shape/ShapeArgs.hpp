@@ -20,8 +20,6 @@ struct LineArgs {
     Vector2D end;
 };
 
-inline constexpr std::size_t RECTANGLE_SIDES_COUNT = 4;
-
 struct RectangleArgs {
     std::array<Vector2D, RECTANGLE_SIDES_COUNT> corners;
 };

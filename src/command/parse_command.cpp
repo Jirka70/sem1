@@ -5,15 +5,13 @@
 #include <util/parse/Number.hpp>
 #include <error/ApplicationError.hpp>
 #include <span>
-#include <validation/schema/shape/circleSchema.hpp>
 #include <validation/schema/tokens/circleTokensSchema.hpp>
 #include <validation/schema/tokens/lineTokensSchema.hpp>
 #include <validation/schema/tokens/rectangleTokensSchema.hpp>
 #include <validation/schema/tokens/tokensSchema.hpp>
-#include <validation/schema/shape/lineSchema.hpp>
-#include <validation/schema/shape/rectangleSchema.hpp>
-#include <command/DrawLineCommand.hpp>
+#include <validation/schema/geometrySchemas.hpp>
 #include <command/DrawCircleCommand.hpp>
+#include <command/DrawLineCommand.hpp>
 #include <command/DrawRectangleCommand.hpp>
 
 
