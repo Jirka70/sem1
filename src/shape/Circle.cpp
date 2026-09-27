@@ -51,6 +51,8 @@ std::unique_ptr<IShape> Circle::operator*(Vector2D factors) const {
         },
         .radius = args_.radius * xScale
     };
+
+    return std::make_unique<Circle>(result);
 }
 
 std::unique_ptr<IShape> Circle::rotate(const Rotation& rotation) const {

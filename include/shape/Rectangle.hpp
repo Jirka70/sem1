@@ -12,19 +12,14 @@ public:
     Rectangle(RectangleArgs args);
     using Corners = std::array<Vector2D, RECTANGLE_SIDES_COUNT>;
 
-    [[nodiscard]]
     const Corners& corners() const;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> operator+(Vector2D offset) const override;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> operator-(Vector2D offset) const override;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> operator*(Vector2D factors) const override;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:

@@ -10,22 +10,16 @@ class Circle final : public IShape {
 public:
     Circle(CircleArgs args);
 
-    [[nodiscard]]
     Vector2D center() const;
 
-    [[nodiscard]]
     double radius() const;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> operator+(Vector2D offset) const override;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> operator-(Vector2D offset) const override;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> operator*(Vector2D factors) const override;
 
-    [[nodiscard]]
     std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:
