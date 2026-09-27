@@ -4,13 +4,12 @@
 #include <cmath>
 #include <cstddef>
 
-namespace {
+
 constexpr std::size_t EXPECTED_TOKEN_COUNT = 5;
 constexpr std::size_t X_INDEX = 1;
 constexpr std::size_t Y_INDEX = 2;
 constexpr std::size_t WIDTH_INDEX = 3;
 constexpr std::size_t HEIGHT_INDEX = 4;
-} // namespace
 
 const Schema<Tokens> rectangleTokensSchema{
     {
@@ -34,8 +33,8 @@ const Schema<Tokens> rectangleTokensSchema{
         "Sirka musi byt konecne cislo vetsi nez nula",
         [](const Tokens& tokens) {
             const auto width = parse_number<double>(tokens[WIDTH_INDEX]);
-            return width.has_value() && std::isfinite(*width)
-                && *width > 0.0;
+            return width.has_value() && std::isfinite(width.value())
+                && width.value() > 0.0;
         }
     },
     {
@@ -43,8 +42,8 @@ const Schema<Tokens> rectangleTokensSchema{
         "Vyska musi byt konecne cislo vetsi nez nula",
         [](const Tokens& tokens) {
             const auto height = parse_number<double>(tokens[HEIGHT_INDEX]);
-            return height.has_value() && std::isfinite(*height)
-                && *height > 0.0;
+            return height.has_value() && std::isfinite(height.value())
+                && height.value() > 0.0;
         }
     }
 };

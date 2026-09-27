@@ -4,12 +4,10 @@
 #include <cmath>
 #include <cstddef>
 
-namespace {
 constexpr std::size_t EXPECTED_TOKEN_COUNT = 4;
 constexpr std::size_t X_INDEX = 1;
 constexpr std::size_t Y_INDEX = 2;
 constexpr std::size_t RADIUS_INDEX = 3;
-} // namespace
 
 const Schema<Tokens> circleTokensSchema{
     {
@@ -27,7 +25,7 @@ const Schema<Tokens> circleTokensSchema{
             const auto x = parse_number<double>(tokens[X_INDEX]);
             const auto y = parse_number<double>(tokens[Y_INDEX]);
             return x.has_value() && y.has_value()
-                && std::isfinite(*x) && std::isfinite(*y);
+                && std::isfinite(x.value()) && std::isfinite(y.value());
         }
     },
     {
@@ -35,8 +33,8 @@ const Schema<Tokens> circleTokensSchema{
         "Polomer musi byt konecne cislo vetsi nez nula",
         [](const Tokens& tokens) {
             const auto radius = parse_number<double>(tokens[RADIUS_INDEX]);
-            return radius.has_value() && std::isfinite(*radius)
-                && *radius > 0.0;
+            return radius.has_value() && std::isfinite(radius.value())
+                && radius.value() > 0.0;
         }
     }
 };

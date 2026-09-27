@@ -4,13 +4,11 @@
 #include <cmath>
 #include <cstddef>
 
-namespace {
 constexpr std::size_t EXPECTED_TOKEN_COUNT = 5;
 constexpr std::size_t START_X_INDEX = 1;
 constexpr std::size_t START_Y_INDEX = 2;
 constexpr std::size_t END_X_INDEX = 3;
 constexpr std::size_t END_Y_INDEX = 4;
-} // namespace
 
 const Schema<Tokens> lineTokensSchema{
     {
@@ -27,8 +25,10 @@ const Schema<Tokens> lineTokensSchema{
         [](const Tokens& tokens) {
             const auto x = parse_number<double>(tokens[START_X_INDEX]);
             const auto y = parse_number<double>(tokens[START_Y_INDEX]);
+
+
             return x.has_value() && y.has_value()
-                && std::isfinite(*x) && std::isfinite(*y);
+                && std::isfinite(x.value()) && std::isfinite(y.value());
         }
     },
     {
@@ -38,7 +38,7 @@ const Schema<Tokens> lineTokensSchema{
             const auto x = parse_number<double>(tokens[END_X_INDEX]);
             const auto y = parse_number<double>(tokens[END_Y_INDEX]);
             return x.has_value() && y.has_value()
-                && std::isfinite(*x) && std::isfinite(*y);
+                && std::isfinite(x.value()) && std::isfinite(y.value());
         }
     }
 };
