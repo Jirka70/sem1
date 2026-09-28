@@ -52,6 +52,10 @@ void Scene::scale(ScaleArgs args) {
         args.factor
     };
 
+    if (args.factor == 1.0) {
+        return;
+    }
+
     auto transformed = transformShapes(
         shapes_,
         [center = args.center, factors](const IShape& shape) {
