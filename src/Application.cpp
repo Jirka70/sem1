@@ -11,6 +11,8 @@
 #include <validation/schema/fileSchema.hpp>
 #include <read/readLine.hpp>
 #include <writer/SVGWriter.hpp>
+#include <writer/writerFactory.hpp>
+#include <validation/schema/outputPathSchema.hpp>
 
 
 struct CommandLineArgs {
@@ -56,7 +58,7 @@ CommandLineArgs parse_args(int argc, char* argv[]) {
     return args;
 }
 
-Scene load_commands(const std::filesystem::path& input_file) {
+Scene load_commands_to_scene(const std::filesystem::path& input_file) {
     require_validation(fileSchema, input_file);
     std::ifstream input{input_file};
 
@@ -88,28 +90,28 @@ Scene load_commands(const std::filesystem::path& input_file) {
     return scene;
 }
 
-void Application::run(int argc, char* argv[]) {
-    auto parsed_args = parse_args(argc, argv);
-    
-    if (parsed_args.output_path.extension() != ".svg") {
-        throw ApplicationError{ExitCode::output_error,
-            "Podporovany vystupni format je .svg"};
-    }
+void write_image(const CommandLineArgs& args, const Scene& scene) {
+    require_validation(outputPathSchema, args.output_path);
 
-    const Scene scene = load_commands(parsed_args.input_path);
-    std::ofstream output{parsed_args.output_path, std::ios::binary};
+    std::ofstream output{args.output_path, std::ios::binary};
     if (!output.is_open()) {
         throw ApplicationError{ExitCode::output_error,
-            "Nelze otevrit vystup: " + parsed_args.output_path.string()};
+            "Nelze otevrit vystup: " + args.output_path.string()};
     }
 
-    SVGWriter writer;
-    writer.write(scene, parsed_args.size, output);
+    const auto writer = create_writer(args.output_path);
+    writer->write(scene, args.size, output);
 
     output.close();
     if (!output) {
         throw ApplicationError{ExitCode::output_error,
-            "Chyba pri dokonceni vystupu: " + parsed_args.output_path.string()};
+            "Chyba pri dokonceni vystupu: " + args.output_path.string()};
     }
+}
 
+void Application::run(int argc, char* argv[]) {
+    auto parsed_args = parse_args(argc, argv);
+
+    const Scene scene = load_commands_to_scene(parsed_args.input_path);
+    write_image(parsed_args, scene);
 }
