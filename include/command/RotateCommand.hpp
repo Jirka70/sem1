@@ -6,7 +6,7 @@
 
 class RotateCommand final : public ICommand {
 public:
-    RotateCommand(RotationArgs args);
+    explicit RotateCommand(RotationArgs args);
 
     void execute(Scene& scene) const override;
 

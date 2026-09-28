@@ -5,12 +5,12 @@ constexpr std::size_t MAX_LINE_BYTES = 256;
 constexpr size_t DELIMITER_SIZE{1};
 using LineBuffer = std::array<char, MAX_LINE_BYTES + DELIMITER_SIZE>;
 
-int computeLengthOfLine(int gcount, bool eof) {
+size_t computeLengthOfLine(std::streamsize gcount, bool eof) {
     if (eof) {
-        return gcount;
+        return static_cast<size_t>(gcount);
     }
 
-    return gcount - DELIMITER_SIZE;
+    return static_cast<size_t>(gcount - DELIMITER_SIZE);
 }
 
 [[nodiscard]]

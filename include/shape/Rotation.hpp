@@ -5,7 +5,7 @@
 
 class Rotation {
 public:
-    Rotation(RotationArgs args);
+    explicit Rotation(RotationArgs args);
 
     Vector2D apply(Vector2D point) const;
 

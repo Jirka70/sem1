@@ -17,13 +17,7 @@ const Schema<Vector2D> vectorSchema{
 };
 
 bool is_valid_vector2D(const Vector2D& vec) {
-    try {
-        require_validation(vectorSchema, vec);
-    } catch (std::invalid_argument& err) {
-        return false;
-    }
-
-    return true;
+    return !validate(vectorSchema, vec).has_value();
 }
 
 

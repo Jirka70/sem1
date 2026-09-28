@@ -6,7 +6,7 @@
 
 class TranslateCommand final : public ICommand {
 public:
-    TranslateCommand(Vector2D offset);
+    explicit TranslateCommand(Vector2D offset);
 
     void execute(Scene& scene) const override;
 

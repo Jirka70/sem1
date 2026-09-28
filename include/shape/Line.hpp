@@ -8,7 +8,7 @@
 
 class Line final : public IShape {
 public:
-    Line(LineArgs args);
+    explicit Line(LineArgs args);
 
     void accept(IShapeVisitor& visitor) const override;
 

@@ -8,7 +8,7 @@
 
 class Circle final : public IShape {
 public:
-    Circle(CircleArgs args);
+    explicit Circle(CircleArgs args);
 
     void accept(IShapeVisitor& visitor) const override;
 
