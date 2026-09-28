@@ -8,10 +8,7 @@
 
 class DrawRectangleCommand final : public ICommand {
 public:
-    explicit DrawRectangleCommand(const Rectangle& args)
-        : args_(args) {
-        require_validation(rectangleSchema, RectangleArgs{args.corners()});
-    }
+    explicit DrawRectangleCommand(const Rectangle& args) : args_(args) {}
 
     void execute(Scene& scene) const override {
         scene.add(std::make_unique<Rectangle>(args_));

@@ -37,8 +37,6 @@ std::unique_ptr<DrawCircleCommand> parse_circle_command(const Tokens& validated_
         .radius = parse_number<double>(circle_parameters[2]).value()
     };
 
-    require_validation(circleSchema, args);
-
     const Circle circle{args};
 
     return std::make_unique<DrawCircleCommand>(circle);
@@ -61,8 +59,6 @@ std::unique_ptr<DrawLineCommand> parse_line_command(const Tokens& validated_toke
             .y = parse_number<double>(parameters[3]).value()
         }
     };
-
-    require_validation(lineSchema, args);
 
     const Line line{args};    
     return std::make_unique<DrawLineCommand>(line);
@@ -90,8 +86,6 @@ std::unique_ptr<DrawRectangleCommand> parse_rectangle_command(const Tokens& vali
         }
     };
 
-    require_validation(rectangleSchema, args);
-
     const Rectangle rectangle{args};
 
     return std::make_unique<DrawRectangleCommand>(rectangle);
@@ -112,8 +106,6 @@ std::unique_ptr<TranslateCommand> parse_translate_command(const Tokens& validate
             parse_number<int>(parameters[1]).value()
         )
     };
-
-    require_validation(vectorSchema, args);
 
     return std::make_unique<TranslateCommand>(args);
 }
@@ -137,8 +129,6 @@ std::unique_ptr<RotateCommand> parse_rotate_command(const Tokens& validated_toke
         .angleDegrees = parse_number<double>(parameters[2]).value()
     };
 
-    require_validation(rotationSchema, args);
-
     return std::make_unique<RotateCommand>(args);
 }
 
@@ -161,8 +151,6 @@ std::unique_ptr<ScaleCommand> parse_scale_command(const Tokens& validated_tokens
         .factor = parse_number<double>(parameters[2]).value()
     };
 
-    require_validation(scaleSchema, args);
-
     return std::make_unique<ScaleCommand>(args);
 }
 
@@ -183,8 +171,7 @@ std::unique_ptr<ICommand> parse_command(std::string_view line, size_t line_numbe
 
         const std::string_view& commant_type = tokens.front();
         if (!factories.contains(commant_type)) {
-            std::cout << "Neznamy prikaz " << commant_type << std::endl;
-            return nullptr;
+            throw std::invalid_argument{"Neznamy prikaz: " + std::string{tokens.front()}};
         }
 
         const auto factory = factories.find(commant_type);

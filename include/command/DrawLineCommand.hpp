@@ -8,10 +8,7 @@
 
 class DrawLineCommand final : public ICommand {
 public:
-    explicit DrawLineCommand(const Line& args)
-        : args_(args) {
-        require_validation(lineSchema, LineArgs{args.start(), args.end()});
-    }
+    explicit DrawLineCommand(const Line& args) : args_(args) {}
 
     void execute(Scene& scene) const override {
         scene.add(std::make_unique<Line>(args_));

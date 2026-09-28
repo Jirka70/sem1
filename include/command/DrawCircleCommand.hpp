@@ -10,10 +10,7 @@
 
 class DrawCircleCommand final : public ICommand {
 public: 
-    explicit DrawCircleCommand(const Circle& args) : args_(args) {
-        require_validation(circleSchema,
-            CircleArgs{ args_.center(), args.radius() });
-    }
+    explicit DrawCircleCommand(const Circle& args) : args_(args) {}
 
     void execute(Scene& scene) const override {
         scene.add(std::make_unique<Circle>(args_));
