@@ -1,8 +1,13 @@
 #include <shape/Circle.hpp>
+#include <shape/IShapeVisitor.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
 Circle::Circle(CircleArgs args) : args_(args) {
     require_validation(circleSchema, args_);
+}
+
+void Circle::accept(IShapeVisitor& visitor) const {
+    visitor.visit(*this);
 }
 
 Vector2D Circle::center() const {

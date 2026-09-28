@@ -1,8 +1,13 @@
 #include <shape/Rectangle.hpp>
+#include <shape/IShapeVisitor.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
 Rectangle::Rectangle(RectangleArgs args) : args_(args) {
     require_validation(rectangleSchema, args_);
+}
+
+void Rectangle::accept(IShapeVisitor& visitor) const {
+    visitor.visit(*this);
 }
 
 const Rectangle::Corners& Rectangle::corners() const {

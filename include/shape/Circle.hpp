@@ -10,6 +10,8 @@ class Circle final : public IShape {
 public:
     Circle(CircleArgs args);
 
+    void accept(IShapeVisitor& visitor) const override;
+
     Vector2D center() const;
 
     double radius() const;

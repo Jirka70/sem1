@@ -6,10 +6,13 @@
 
 #include <memory>
 
+class IShapeVisitor;
 
 class IShape {
 public:
     virtual ~IShape() = default;
+
+    virtual void accept(IShapeVisitor& visitor) const = 0;
 
     virtual std::unique_ptr<IShape> operator+(
         Vector2D offset

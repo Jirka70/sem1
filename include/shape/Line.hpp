@@ -10,6 +10,8 @@ class Line final : public IShape {
 public:
     Line(LineArgs args);
 
+    void accept(IShapeVisitor& visitor) const override;
+
     Vector2D start() const;
 
     Vector2D end() const;

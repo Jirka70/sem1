@@ -10,26 +10,22 @@
 #include <command/parse/parse_command.hpp>
 #include <validation/schema/fileSchema.hpp>
 #include <read/readLine.hpp>
+#include <writer/SVGWriter.hpp>
 
-
-struct ImageSize {
-    int width;
-    int height;
-};
 
 struct CommandLineArgs {
     std::filesystem::path input_path;
     std::filesystem::path output_path;
-    ImageSize size;
+    CanvasSize size;
 };
 
-ImageSize parse_image_size_after_param_validation(std::string_view text) {
+CanvasSize parse_image_size_after_param_validation(std::string_view text) {
     const auto separator = text.find('x');
 
     const auto width_text = text.substr(0, separator);
     const auto height_text = text.substr(separator + 1);
 
-    ImageSize size{};
+    CanvasSize size{};
 
     std::from_chars(
         width_text.data(),
@@ -49,7 +45,7 @@ ImageSize parse_image_size_after_param_validation(std::string_view text) {
 CommandLineArgs parse_args(int argc, char* argv[]) {
     require_validation(commandLineSchema, { argc, argv });
 
-    const ImageSize image_size = parse_image_size_after_param_validation(argv[3]);
+    const CanvasSize image_size = parse_image_size_after_param_validation(argv[3]);
     
     CommandLineArgs args{
         std::filesystem::path(argv[1]),
@@ -60,7 +56,7 @@ CommandLineArgs parse_args(int argc, char* argv[]) {
     return args;
 }
 
-void load_commands(const std::filesystem::path& input_file) {
+Scene load_commands(const std::filesystem::path& input_file) {
     require_validation(fileSchema, input_file);
     std::ifstream input{input_file};
 
@@ -88,11 +84,32 @@ void load_commands(const std::filesystem::path& input_file) {
             "Chyba pri cteni vstupu: " + input_file.string()
         };
     }
+
+    return scene;
 }
 
 void Application::run(int argc, char* argv[]) {
     auto parsed_args = parse_args(argc, argv);
     
-    load_commands(parsed_args.input_path);
+    if (parsed_args.output_path.extension() != ".svg") {
+        throw ApplicationError{ExitCode::output_error,
+            "Podporovany vystupni format je .svg"};
+    }
+
+    const Scene scene = load_commands(parsed_args.input_path);
+    std::ofstream output{parsed_args.output_path, std::ios::binary};
+    if (!output.is_open()) {
+        throw ApplicationError{ExitCode::output_error,
+            "Nelze otevrit vystup: " + parsed_args.output_path.string()};
+    }
+
+    SVGWriter writer;
+    writer.write(scene, parsed_args.size, output);
+
+    output.close();
+    if (!output) {
+        throw ApplicationError{ExitCode::output_error,
+            "Chyba pri dokonceni vystupu: " + parsed_args.output_path.string()};
+    }
 
 }

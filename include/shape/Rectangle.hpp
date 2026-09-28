@@ -10,6 +10,8 @@
 class Rectangle final : public IShape {
 public:
     Rectangle(RectangleArgs args);
+
+    void accept(IShapeVisitor& visitor) const override;
     using Corners = std::array<Vector2D, RECTANGLE_SIDES_COUNT>;
 
     const Corners& corners() const;

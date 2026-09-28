@@ -1,8 +1,13 @@
 #include <shape/Line.hpp>
+#include <shape/IShapeVisitor.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
 Line::Line(LineArgs args) : args_(args) {
     require_validation(lineSchema, args_);
+}
+
+void Line::accept(IShapeVisitor& visitor) const {
+    visitor.visit(*this);
 }
 
 Vector2D Line::start() const {
