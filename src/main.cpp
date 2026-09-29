@@ -3,11 +3,17 @@
 #include "Application.hpp"
 
 #include <iostream>
+#include <error/ApplicationError.hpp>
 
 int main(int argc, char* argv[]) {
     try {
         Application app;
         app.run(argc, argv);
+
+        return static_cast<int>(ExitCode::success);
+    } catch (const ApplicationError& error) {
+        std::cerr << error.what() << std::endl;
+        return static_cast<int>(error.code());
     } catch (const std::exception& error) {
         std::cerr << error.what() << std::endl;
         return static_cast<int>(ExitCode::failure);
