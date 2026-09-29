@@ -2,6 +2,7 @@
 #include "error/ApplicationError.hpp"
 #include "validation/schema/commandLineSchema.hpp"
 #include "validation/Validation.hpp"
+#include "validation/input/CommandLineInput.hpp"
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -14,6 +15,19 @@
 #include <writer/writerFactory.hpp>
 #include <validation/schema/outputPathSchema.hpp>
 
+template<typename T>
+void require_application_validation(
+    const Schema<T>& schema,
+    const T& value,
+    ExitCode exit_code
+) {
+    if (const auto error = validate(schema, value)) {
+        throw ApplicationError{
+            exit_code,
+            error->field + ": " + error->message
+        };
+    }
+}
 
 struct CommandLineArgs {
     std::filesystem::path input_path;
@@ -45,7 +59,7 @@ CanvasSize parse_image_size_after_param_validation(std::string_view text) {
 }
 
 CommandLineArgs parse_args(int argc, char* argv[]) {
-    require_validation(commandLineSchema, { argc, argv });
+    require_application_validation(commandLineSchema, CommandLineInput{argc, argv}, ExitCode::invalid_arguments);
 
     const CanvasSize image_size = parse_image_size_after_param_validation(argv[3]);
     
@@ -64,7 +78,7 @@ struct LoadCommandResult {
 };
 
 LoadCommandResult load_commands_to_scene(const std::filesystem::path& input_file) {
-    require_validation(fileSchema, input_file);
+    require_application_validation(fileSchema, input_file, ExitCode::input_error);
     std::ifstream input{input_file};
 
     if (!input.is_open()) {
@@ -101,7 +115,7 @@ LoadCommandResult load_commands_to_scene(const std::filesystem::path& input_file
 }
 
 void write_image(const CommandLineArgs& args, const Scene& scene) {
-    require_validation(outputPathSchema, args.output_path);
+    require_application_validation(outputPathSchema, args.output_path, ExitCode::output_error);
 
     std::ofstream output{args.output_path, std::ios::binary};
     if (!output.is_open()) {
