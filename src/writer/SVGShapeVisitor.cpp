@@ -11,14 +11,16 @@
 #include <ostream>
 #include <string>
 #include <system_error>
+#include <validation/schema/svgNumberSchema.hpp>
+
+constexpr std::size_t SCIENTIFIC_NOTATION_OVERHEAD = 7;
+
+constexpr std::size_t NUMBER_BUFFER_SIZE = std::numeric_limits<double>::max_digits10 + SCIENTIFIC_NOTATION_OVERHEAD;
 
 static std::string svg_number(double value) {
-    if (!std::isfinite(value)) {
-        throw ApplicationError{ExitCode::output_error,
-            "SVG souradnice musi byt konecne cislo"};
-    }
+    require_validation(svgNumberSchema, value);
 
-    std::array<char, 128> buffer{};
+    std::array<char, NUMBER_BUFFER_SIZE> buffer{};
     const auto [end, error] = std::to_chars(
         buffer.data(), buffer.data() + buffer.size(), value
     );

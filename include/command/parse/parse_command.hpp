@@ -7,10 +7,10 @@
 #include <memory>
 #include <string_view>
 #include <command/ICommand.hpp>
+#include <util/parse/Text.hpp>
 
-using Tokens = std::vector<std::string_view>;
 using CommandFactory = std::function<std::unique_ptr<ICommand>(const Tokens&)>;
 
-std::unique_ptr<ICommand> parse_command(std::string_view line, size_t line_number);
+std::unique_ptr<ICommand> parse_command(const Tokens& tokens, size_t line_number);
 
 #endif

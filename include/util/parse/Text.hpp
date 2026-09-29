@@ -3,7 +3,8 @@
 
 #include <string_view>
 #include <vector>
-#include <command/parse/parse_command.hpp>
+
+using Tokens = std::vector<std::string_view>;
 
 std::vector<std::string_view> split(std::string_view text, std::string_view separator);
 Tokens tokenize(std::string_view text);

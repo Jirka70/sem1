@@ -73,11 +73,14 @@ Scene load_commands_to_scene(const std::filesystem::path& input_file) {
     Scene scene;
     while (readLine(input, line, line_number + 1)) {
         ++line_number;
+        const auto tokens = tokenize(line);
 
-        const auto command = parse_command(line, line_number);
+        if (tokens.empty()) {
+            continue;
+        }
+
+        const auto command = parse_command(tokens, line_number);
         command->execute(scene);
-
-        std::cout << "Line: " << line << std::endl;
     }
 
     if (input.bad() || (input.fail() && !input.eof())) {

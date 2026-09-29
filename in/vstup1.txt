@@ -1,7 +1,10 @@
 circle 50 50 10
 line 50 50 100 50
 circle 100 50 15
-rotate 75 50 45
+
+
+
+rotate 75 50 45 # pepa zetek
 translate 20 20
 rect 10 10 40 30
 scale 0 0 2

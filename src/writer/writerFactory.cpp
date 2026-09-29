@@ -1,5 +1,6 @@
 #include <writer/writerFactory.hpp>
 #include <writer/SVGWriter.hpp>
+#include <writer/PGMWriter.hpp>
 #include <error/ApplicationError.hpp>
 
 using WriterFactory = std::unique_ptr<IWriter> (*)();
@@ -10,7 +11,8 @@ std::unique_ptr<IWriter> make_writer() {
 }
 
 const std::unordered_map<std::string_view, WriterFactory> factories{
-    {".svg", make_writer<SVGWriter>}
+    {".svg", make_writer<SVGWriter>},
+    {".pgm", make_writer<PGMWriter>}
 };
 
 std::unique_ptr<IWriter> create_writer(const std::filesystem::path& output_path) {

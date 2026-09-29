@@ -164,11 +164,8 @@ static const std::unordered_map<std::string_view, CommandFactory>factories{
 };
 
 
-std::unique_ptr<ICommand> parse_command(std::string_view line, size_t line_number) {
-    Tokens tokens = tokenize(line);
+std::unique_ptr<ICommand> parse_command(const Tokens& tokens, size_t line_number) {
     try {
-        require_validation(tokensSchema, tokens);
-
         const std::string_view& commant_type = tokens.front();
         if (!factories.contains(commant_type)) {
             throw std::invalid_argument{"Neznamy prikaz: " + std::string{tokens.front()}};
