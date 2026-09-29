@@ -58,7 +58,12 @@ CommandLineArgs parse_args(int argc, char* argv[]) {
     return args;
 }
 
-Scene load_commands_to_scene(const std::filesystem::path& input_file) {
+struct LoadCommandResult {
+    Scene scene;
+    std::size_t processed_lines;
+};
+
+LoadCommandResult load_commands_to_scene(const std::filesystem::path& input_file) {
     require_validation(fileSchema, input_file);
     std::ifstream input{input_file};
 
@@ -69,6 +74,7 @@ Scene load_commands_to_scene(const std::filesystem::path& input_file) {
 
     std::string line;
     std::size_t line_number{0};
+    std::size_t processed_lines{0};
 
     Scene scene;
     while (readLine(input, line, line_number + 1)) {
@@ -81,6 +87,7 @@ Scene load_commands_to_scene(const std::filesystem::path& input_file) {
 
         const auto command = parse_command(tokens, line_number);
         command->execute(scene);
+        ++processed_lines;
     }
 
     if (input.bad() || (input.fail() && !input.eof())) {
@@ -90,7 +97,7 @@ Scene load_commands_to_scene(const std::filesystem::path& input_file) {
         };
     }
 
-    return scene;
+    return {std::move(scene), processed_lines};
 }
 
 void write_image(const CommandLineArgs& args, const Scene& scene) {
@@ -112,9 +119,38 @@ void write_image(const CommandLineArgs& args, const Scene& scene) {
     }
 }
 
-void Application::run(int argc, char* argv[]) {
-    auto parsed_args = parse_args(argc, argv);
-
-    const Scene scene = load_commands_to_scene(parsed_args.input_path);
-    write_image(parsed_args, scene);
+ApplicationResult success(size_t processed_lines) {
+    return ApplicationResult{
+        .status = ApplicationStatus::OK,
+        .exitCode = ExitCode::success,
+        .processed_lines = processed_lines,
+        .error_message = {}
+    };
 }
+
+ApplicationResult failure(const ExitCode exit_code, const std::string& error_message) {
+    return ApplicationResult{
+        .status = ApplicationStatus::FAILURE,
+        .exitCode = exit_code,
+        .processed_lines = 0,
+        .error_message = error_message
+    };
+}
+
+ApplicationResult Application::run(int argc, char* argv[]) {
+    try {
+        auto parsed_args = parse_args(argc, argv);
+
+        const auto result = load_commands_to_scene(parsed_args.input_path);
+        write_image(parsed_args, result.scene);
+
+        return success(result.processed_lines);
+    } catch (const ApplicationError& error) {
+        return failure(error.code(), error.what());
+    } catch (const std::exception& exc) {
+        return failure(ExitCode::failure, exc.what());
+    } catch (...) {
+        return failure(ExitCode::failure, "Zpracovani se nepodarilo dokoncit kvuli neocekavane chybe.");
+    }
+}
+
