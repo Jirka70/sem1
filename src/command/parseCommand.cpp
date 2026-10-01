@@ -26,15 +26,15 @@ constexpr size_t PARAM_START_INDEX = 1;
 std::unique_ptr<DrawCircleCommand> parse_circle_command(const tokens& validated_tokens) {
     require_validation_t(circleTokensSchema, validated_tokens);
 
-    const auto& circle_parameters = std::span<const std::string_view>{validated_tokens}
+    const auto& validated_circle_parameters = std::span<const std::string_view>{validated_tokens}
         .subspan(PARAM_START_INDEX);
 
     const CircleArgs args = CircleArgs{
         .center = {
-            .x = parse_number_t<double>(circle_parameters[0]).value(),
-            .y = parse_number_t<double>(circle_parameters[1]).value()
+            .x = parse_number_t<double>(validated_circle_parameters[0]).value(),
+            .y = parse_number_t<double>(validated_circle_parameters[1]).value()
         },
-        .radius = parse_number_t<double>(circle_parameters[2]).value()
+        .radius = parse_number_t<double>(validated_circle_parameters[2]).value()
     };
 
     const Circle circle{args};
@@ -45,18 +45,18 @@ std::unique_ptr<DrawCircleCommand> parse_circle_command(const tokens& validated_
 std::unique_ptr<DrawLineCommand> parse_line_command(const tokens& validated_tokens) {
     require_validation_t(lineTokensSchema, validated_tokens);
 
-    const auto parameters = std::span<const std::string_view>{validated_tokens}
+    const auto validated_parameters = std::span<const std::string_view>{validated_tokens}
         .subspan(PARAM_START_INDEX);
 
     
     const LineArgs args = LineArgs{
         .start = {
-            .x = parse_number_t<double>(parameters[0]).value(),
-            .y = parse_number_t<double>(parameters[1]).value()
+            .x = parse_number_t<double>(validated_parameters[0]).value(),
+            .y = parse_number_t<double>(validated_parameters[1]).value()
         },
         .end = {
-            .x = parse_number_t<double>(parameters[2]).value(),
-            .y = parse_number_t<double>(parameters[3]).value()
+            .x = parse_number_t<double>(validated_parameters[2]).value(),
+            .y = parse_number_t<double>(validated_parameters[3]).value()
         }
     };
 
@@ -67,13 +67,13 @@ std::unique_ptr<DrawLineCommand> parse_line_command(const tokens& validated_toke
 std::unique_ptr<DrawRectangleCommand> parse_rectangle_command(const tokens& validated_tokens) {
     require_validation_t(rectangleTokensSchema, validated_tokens);
 
-    const auto parameters = std::span<const std::string_view>{validated_tokens}
+    const auto validated_parameters = std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
-    const double left = parse_number_t<int>(parameters[0]).value();
-    const double top = parse_number_t<int>(parameters[1]).value();
-    const double width = parse_number_t<double>(parameters[2]).value();
-    const double height = parse_number_t<double>(parameters[3]).value();
+    const double left = parse_number_t<int>(validated_parameters[0]).value();
+    const double top = parse_number_t<int>(validated_parameters[1]).value();
+    const double width = parse_number_t<double>(validated_parameters[2]).value();
+    const double height = parse_number_t<double>(validated_parameters[3]).value();
     const double right = left + width;
     const double bottom = top + height;
 
@@ -94,16 +94,15 @@ std::unique_ptr<DrawRectangleCommand> parse_rectangle_command(const tokens& vali
 std::unique_ptr<TranslateCommand> parse_translate_command(const tokens& validated_tokens) {
     require_validation_t(translateTokensSchema, validated_tokens);
 
-    const auto parameters =
-        std::span<const std::string_view>{validated_tokens}
+    const auto validated_parameters = std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
     const Vector2D args = Vector2D{
         .x = static_cast<double>(
-            parse_number_t<int>(parameters[0]).value()
+            parse_number_t<int>(validated_parameters[0]).value()
         ),
         .y = static_cast<double>(
-            parse_number_t<int>(parameters[1]).value()
+            parse_number_t<int>(validated_parameters[1]).value()
         )
     };
 
@@ -113,20 +112,20 @@ std::unique_ptr<TranslateCommand> parse_translate_command(const tokens& validate
 std::unique_ptr<RotateCommand> parse_rotate_command(const tokens& validated_tokens) {
     require_validation_t(rotateTokensSchema, validated_tokens);
 
-    const auto parameters =
+    const auto validated_parameters =
         std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
     const RotationArgs args = RotationArgs{
         .center = {
             .x = static_cast<double>(
-                parse_number_t<int>(parameters[0]).value()
+                parse_number_t<int>(validated_parameters[0]).value()
             ),
             .y = static_cast<double>(
-                parse_number_t<int>(parameters[1]).value()
+                parse_number_t<int>(validated_parameters[1]).value()
             )
         },
-        .angleDegrees = parse_number_t<double>(parameters[2]).value()
+        .angleDegrees = parse_number_t<double>(validated_parameters[2]).value()
     };
 
     return std::make_unique<RotateCommand>(args);
@@ -135,20 +134,20 @@ std::unique_ptr<RotateCommand> parse_rotate_command(const tokens& validated_toke
 std::unique_ptr<ScaleCommand> parse_scale_command(const tokens& validated_tokens) {
     require_validation_t(scaleTokensSchema, validated_tokens);
 
-    const auto parameters =
+    const auto validated_parameters =
         std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
     const ScaleArgs args = ScaleArgs{
         .center = {
             .x = static_cast<double>(
-                parse_number_t<int>(parameters[0]).value()
+                parse_number_t<int>(validated_parameters[0]).value()
             ),
             .y = static_cast<double>(
-                parse_number_t<int>(parameters[1]).value()
+                parse_number_t<int>(validated_parameters[1]).value()
             )
         },
-        .factor = parse_number_t<double>(parameters[2]).value()
+        .factor = parse_number_t<double>(validated_parameters[2]).value()
     };
 
     return std::make_unique<ScaleCommand>(args);
