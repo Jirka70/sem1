@@ -3,10 +3,10 @@
 
 #include <scene.hpp>
 
-class iCommand {
+class ICommand {
 public:    
-    virtual ~iCommand() = default;
-    virtual void execute(scene& scene) const = 0;
+    virtual ~ICommand() = default;
+    virtual void execute(Scene& scene) const = 0;
 };
 
 #endif

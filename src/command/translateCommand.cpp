@@ -4,11 +4,11 @@
 #include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-translateCommand::translateCommand(vector2D offset)
+TranslateCommand::TranslateCommand(Vector2D offset)
     : offset_(offset) {
     require_validation_t(vectorSchema, offset_);
 }
 
-void translateCommand::execute(scene& scene) const {
+void TranslateCommand::execute(Scene& scene) const {
     scene.translate(offset_);
 }

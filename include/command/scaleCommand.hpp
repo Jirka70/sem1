@@ -4,14 +4,14 @@
 #include <command/iCommand.hpp>
 #include <shape/shapeArgs.hpp>
 
-class scaleCommand final : public iCommand {
+class ScaleCommand final : public ICommand {
 public:
-    explicit scaleCommand(scaleArgs args);
+    explicit ScaleCommand(ScaleArgs args);
 
-    void execute(scene& scene) const override;
+    void execute(Scene& scene) const override;
 
 private:
-    scaleArgs args_;
+    ScaleArgs args_;
 };
 
 #endif

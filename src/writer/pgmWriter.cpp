@@ -8,12 +8,12 @@
 #include <ostream>
 #include <string>
 
-void pgmWriter::write(
-    const scene& scene,
-    canvasSize size,
+void PgmWriter::write(
+    const Scene& scene,
+    CanvasSize size,
     std::ostream& output
 ) const {
-    pgmShapeVisitor visitor{size};
+    PgmShapeVisitor visitor{size};
 
     for (const auto& shape : scene.shapes()) {
         shape->accept(visitor);
@@ -33,7 +33,7 @@ void pgmWriter::write(
     }
 
     if (!output) {
-        throw applicationError{
+        throw ApplicationError{
             exitCode::OUTPUT_ERROR,
             "Chyba pri zapisu PGM vystupu"
         };

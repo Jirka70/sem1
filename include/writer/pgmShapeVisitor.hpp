@@ -8,25 +8,25 @@
 #include <span>
 #include <vector>
 
-class pgmShapeVisitor final : public iShapeVisitor {
+class PgmShapeVisitor final : public IShapeVisitor {
 public:
-    explicit pgmShapeVisitor(canvasSize size);
+    explicit PgmShapeVisitor(CanvasSize size);
 
-    void visit(const circle& circle) override;
-    void visit(const line& line) override;
-    void visit(const rectangle& rectangle) override;
+    void visit(const Circle& circle) override;
+    void visit(const Line& line) override;
+    void visit(const Rectangle& rectangle) override;
 
     std::span<const unsigned char> pixels() const noexcept;
 
 private:
-    struct pixelBounds {
+    struct PixelBounds {
         int left;
         int top;
         int right;
         int bottom;
     };
 
-    pixelBounds clipped_bounds(
+    PixelBounds clipped_bounds(
         double left,
         double top,
         double right,
@@ -35,9 +35,9 @@ private:
 
     void set_black(int x, int y);
 
-    void draw_segment(vector2D start, vector2D end);
+    void draw_segment(Vector2D start, Vector2D end);
 
-    canvasSize size_;
+    CanvasSize size_;
     std::vector<unsigned char> pixels_;
 };
 

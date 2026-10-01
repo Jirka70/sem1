@@ -22,26 +22,26 @@ void require_application_validation_t(
     exitCode exit_code
 ) {
     if (const auto error = validate_t(schema, value)) {
-        throw applicationError{
+        throw ApplicationError{
             exit_code,
             error->field + ": " + error->message
         };
     }
 }
 
-struct commandLineArgs {
+struct CommandLineArgs {
     std::filesystem::path input_path;
     std::filesystem::path output_path;
-    canvasSize size;
+    CanvasSize size;
 };
 
-canvasSize parse_image_size_after_param_validation(std::string_view text) {
+CanvasSize parse_image_size_after_param_validation(std::string_view text) {
     const auto separator = text.find('x');
 
     const auto width_text = text.substr(0, separator);
     const auto height_text = text.substr(separator + 1);
 
-    canvasSize size{};
+    CanvasSize size{};
 
     std::from_chars(
         width_text.data(),
@@ -58,12 +58,12 @@ canvasSize parse_image_size_after_param_validation(std::string_view text) {
     return size;
 }
 
-commandLineArgs parse_args(int argc, char* argv[]) {
-    require_application_validation_t(commandLineSchema, commandLineInput{argc, argv}, exitCode::INVALID_ARGUMENTS);
+CommandLineArgs parse_args(int argc, char* argv[]) {
+    require_application_validation_t(commandLineSchema, CommandLineInput{argc, argv}, exitCode::INVALID_ARGUMENTS);
 
-    const canvasSize image_size = parse_image_size_after_param_validation(argv[3]);
+    const CanvasSize image_size = parse_image_size_after_param_validation(argv[3]);
     
-    commandLineArgs args{
+    CommandLineArgs args{
         std::filesystem::path(argv[1]),
         std::filesystem::path(argv[2]),
         image_size
@@ -72,17 +72,17 @@ commandLineArgs parse_args(int argc, char* argv[]) {
     return args;
 }
 
-struct loadCommandResult {
-    ::scene scene;
+struct LoadCommandResult {
+    ::Scene scene;
     std::size_t processed_lines;
 };
 
-loadCommandResult load_commands_to_scene(const std::filesystem::path& input_file) {
+LoadCommandResult load_commands_to_scene(const std::filesystem::path& input_file) {
     require_application_validation_t(fileSchema, input_file, exitCode::INPUT_ERROR);
     std::ifstream input{input_file};
 
     if (!input.is_open()) {
-        throw applicationError{exitCode::INPUT_ERROR,
+        throw ApplicationError{exitCode::INPUT_ERROR,
             "Nelze otevrit vstup: " + input_file.string()};
     }
 
@@ -90,7 +90,7 @@ loadCommandResult load_commands_to_scene(const std::filesystem::path& input_file
     std::size_t line_number{0};
     std::size_t processed_lines{0};
 
-    scene scene;
+    Scene scene;
     while (read_line(input, line, line_number + 1)) {
         ++line_number;
         const auto tokens = tokenize(line);
@@ -105,7 +105,7 @@ loadCommandResult load_commands_to_scene(const std::filesystem::path& input_file
     }
 
     if (input.bad() || (input.fail() && !input.eof())) {
-        throw applicationError{
+        throw ApplicationError{
             exitCode::INPUT_ERROR,
             "Chyba pri cteni vstupu: " + input_file.string()
         };
@@ -114,12 +114,12 @@ loadCommandResult load_commands_to_scene(const std::filesystem::path& input_file
     return {std::move(scene), processed_lines};
 }
 
-void write_image(const commandLineArgs& args, const scene& scene) {
+void write_image(const CommandLineArgs& args, const Scene& scene) {
     require_application_validation_t(outputPathSchema, args.output_path, exitCode::OUTPUT_ERROR);
 
     std::ofstream output{args.output_path, std::ios::binary};
     if (!output.is_open()) {
-        throw applicationError{exitCode::OUTPUT_ERROR,
+        throw ApplicationError{exitCode::OUTPUT_ERROR,
             "Nelze otevrit vystup: " + args.output_path.string()};
     }
 
@@ -128,13 +128,13 @@ void write_image(const commandLineArgs& args, const scene& scene) {
 
     output.close();
     if (!output) {
-        throw applicationError{exitCode::OUTPUT_ERROR,
+        throw ApplicationError{exitCode::OUTPUT_ERROR,
             "Chyba pri dokonceni vystupu: " + args.output_path.string()};
     }
 }
 
-applicationResult success(size_t processed_lines) {
-    return applicationResult{
+ApplicationResult success(size_t processed_lines) {
+    return ApplicationResult{
         .status = applicationStatus::OK,
         .exitCode = exitCode::SUCCESS,
         .processed_lines = processed_lines,
@@ -142,8 +142,8 @@ applicationResult success(size_t processed_lines) {
     };
 }
 
-applicationResult failure(const exitCode exit_code, const std::string& error_message) {
-    return applicationResult{
+ApplicationResult failure(const exitCode exit_code, const std::string& error_message) {
+    return ApplicationResult{
         .status = applicationStatus::FAILURE,
         .exitCode = exit_code,
         .processed_lines = 0,
@@ -151,7 +151,7 @@ applicationResult failure(const exitCode exit_code, const std::string& error_mes
     };
 }
 
-applicationResult application::run(int argc, char* argv[]) {
+ApplicationResult Application::run(int argc, char* argv[]) {
     try {
         auto parsed_args = parse_args(argc, argv);
 
@@ -159,7 +159,7 @@ applicationResult application::run(int argc, char* argv[]) {
         write_image(parsed_args, result.scene);
 
         return success(result.processed_lines);
-    } catch (const applicationError& error) {
+    } catch (const ApplicationError& error) {
         return failure(error.code(), error.what());
     } catch (const std::exception& exc) {
         return failure(exitCode::FAILURE, exc.what());

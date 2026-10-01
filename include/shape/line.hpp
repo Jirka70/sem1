@@ -6,26 +6,26 @@
 
 #include <memory>
 
-class line final : public iShape {
+class Line final : public IShape {
 public:
-    explicit line(lineArgs args);
+    explicit Line(LineArgs args);
 
-    void accept(iShapeVisitor& visitor) const override;
+    void accept(IShapeVisitor& visitor) const override;
 
-    vector2D start() const;
+    Vector2D start() const;
 
-    vector2D end() const;
+    Vector2D end() const;
 
-    std::unique_ptr<iShape> operator+(vector2D offset) const override;
+    std::unique_ptr<IShape> operator+(Vector2D offset) const override;
 
-    std::unique_ptr<iShape> operator-(vector2D offset) const override;
+    std::unique_ptr<IShape> operator-(Vector2D offset) const override;
 
-    std::unique_ptr<iShape> operator*(vector2D factors) const override;
+    std::unique_ptr<IShape> operator*(Vector2D factors) const override;
 
-    std::unique_ptr<iShape> rotate(const rotation& rotation) const override;
+    std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:
-    lineArgs args_{};
+    LineArgs args_{};
 };
 
 #endif

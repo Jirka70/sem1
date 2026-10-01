@@ -6,16 +6,16 @@
 #include <validation/validation.hpp>
 #include <shape/rectangle.hpp>
 
-class drawRectangleCommand final : public iCommand {
+class DrawRectangleCommand final : public ICommand {
 public:
-    explicit drawRectangleCommand(const rectangle& args) : args_(args) {}
+    explicit DrawRectangleCommand(const Rectangle& args) : args_(args) {}
 
-    void execute(scene& scene) const override {
-        scene.add(std::make_unique<rectangle>(args_));
+    void execute(Scene& scene) const override {
+        scene.add(std::make_unique<Rectangle>(args_));
     }
 
 private:
-    const rectangle args_;
+    const Rectangle args_;
 };
 
 #endif

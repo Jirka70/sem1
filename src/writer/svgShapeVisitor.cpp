@@ -26,36 +26,36 @@ static std::string svg_number(double value) {
     );
 
     if (error != std::errc{}) {
-        throw applicationError{exitCode::OUTPUT_ERROR,
+        throw ApplicationError{exitCode::OUTPUT_ERROR,
             "Nelze prevest cislo pro SVG vystup"};
     }
 
     return std::string(buffer.data(), end);
 }
 
-svgShapeVisitor::svgShapeVisitor(std::ostream& output) : output_(output) {}
+SvgShapeVisitor::SvgShapeVisitor(std::ostream& output) : output_(output) {}
 
-void svgShapeVisitor::visit(const circle& circle) {
-    const vector2D center = circle.center();
+void SvgShapeVisitor::visit(const Circle& circle) {
+    const Vector2D center = circle.center();
     output_ << "    <circle cx=\"" << svg_number(center.x)
             << "\" cy=\"" << svg_number(center.y)
             << "\" r=\"" << svg_number(circle.radius()) << "\" />" << std::endl;
 }
 
-void svgShapeVisitor::visit(const line& line) {
-    const vector2D start = line.start();
-    const vector2D end = line.end();
+void SvgShapeVisitor::visit(const Line& line) {
+    const Vector2D start = line.start();
+    const Vector2D end = line.end();
     output_ << "    <line x1=\"" << svg_number(start.x)
             << "\" y1=\"" << svg_number(start.y)
             << "\" x2=\"" << svg_number(end.x)
             << "\" y2=\"" << svg_number(end.y) << "\" />" << std::endl;
 }
 
-void svgShapeVisitor::visit(const rectangle& rectangle) {
+void SvgShapeVisitor::visit(const Rectangle& rectangle) {
     // A transformed rectangle need not be aligned with the canvas axes.
     output_ << "    <polygon points=\"";
     bool first = true;
-    for (const vector2D& corner : rectangle.corners()) {
+    for (const Vector2D& corner : rectangle.corners()) {
         if (!first) {
             output_ << ' ';
         }

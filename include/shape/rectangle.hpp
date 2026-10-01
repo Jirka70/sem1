@@ -7,25 +7,25 @@
 #include <array>
 #include <memory>
 
-class rectangle final : public iShape {
+class Rectangle final : public IShape {
 public:
-    explicit rectangle(rectangleArgs args);
+    explicit Rectangle(RectangleArgs args);
 
-    void accept(iShapeVisitor& visitor) const override;
-    using cornersType = std::array<vector2D, RECTANGLE_SIDES_COUNT>;
+    void accept(IShapeVisitor& visitor) const override;
+    using cornersType = std::array<Vector2D, RECTANGLE_SIDES_COUNT>;
 
     const cornersType& corners() const;
 
-    std::unique_ptr<iShape> operator+(vector2D offset) const override;
+    std::unique_ptr<IShape> operator+(Vector2D offset) const override;
 
-    std::unique_ptr<iShape> operator-(vector2D offset) const override;
+    std::unique_ptr<IShape> operator-(Vector2D offset) const override;
 
-    std::unique_ptr<iShape> operator*(vector2D factors) const override;
+    std::unique_ptr<IShape> operator*(Vector2D factors) const override;
 
-    std::unique_ptr<iShape> rotate(const rotation& rotation) const override;
+    std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:
-    rectangleArgs args_{};
+    RectangleArgs args_{};
 };
 
 #endif

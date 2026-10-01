@@ -1,7 +1,7 @@
 #ifndef SEM1_WRITER_CANVAS_SIZE_HPP
 #define SEM1_WRITER_CANVAS_SIZE_HPP
 
-struct canvasSize {
+struct CanvasSize {
     int width;
     int height;
 };

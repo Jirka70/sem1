@@ -4,6 +4,6 @@
 #include <validation/validation.hpp>
 #include <writer/canvasSize.hpp>
 
-extern const schema<canvasSize> canvasSizeSchema;
+extern const schema<CanvasSize> canvasSizeSchema;
 
 #endif

@@ -4,14 +4,14 @@
 #include <shape/shapeArgs.hpp>
 #include <validation/validation.hpp>
 
-extern const schema<vector2D> vectorSchema;
-extern const schema<vector2D> scaleFactorsSchema;
+extern const schema<Vector2D> vectorSchema;
+extern const schema<Vector2D> scaleFactorsSchema;
 
-extern const schema<circleArgs> circleSchema;
-extern const schema<lineArgs> lineSchema;
-extern const schema<rectangleArgs> rectangleSchema;
+extern const schema<CircleArgs> circleSchema;
+extern const schema<LineArgs> lineSchema;
+extern const schema<RectangleArgs> rectangleSchema;
 
-extern const schema<rotationArgs> rotationSchema;
-extern const schema<scaleArgs> scaleSchema;
+extern const schema<RotationArgs> rotationSchema;
+extern const schema<ScaleArgs> scaleSchema;
 
 #endif

@@ -6,16 +6,16 @@
 #include <validation/validation.hpp>
 #include <shape/line.hpp>
 
-class drawLineCommand final : public iCommand {
+class DrawLineCommand final : public ICommand {
 public:
-    explicit drawLineCommand(const line& args) : args_(args) {}
+    explicit DrawLineCommand(const Line& args) : args_(args) {}
  
-    void execute(scene& scene) const override {
-        scene.add(std::make_unique<line>(args_));
+    void execute(Scene& scene) const override {
+        scene.add(std::make_unique<Line>(args_));
     }
 
 private:
-    const line args_;
+    const Line args_;
 };
 
 #endif

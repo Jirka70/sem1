@@ -3,11 +3,11 @@
 
 #include <writer/iWriter.hpp>
 
-class svgWriter final : public iWriter {
+class SvgWriter final : public IWriter {
 public:
     void write(
-        const scene& scene,
-        canvasSize size,
+        const Scene& scene,
+        CanvasSize size,
         std::ostream& output
     ) const override;
 };

@@ -4,11 +4,11 @@
 #include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-scaleCommand::scaleCommand(scaleArgs args)
+ScaleCommand::ScaleCommand(ScaleArgs args)
     : args_(args) {
     require_validation_t(scaleSchema, args_);
 }
 
-void scaleCommand::execute(scene& scene) const {
+void ScaleCommand::execute(Scene& scene) const {
     scene.scale(args_);
 }

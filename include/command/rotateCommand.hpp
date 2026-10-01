@@ -4,14 +4,14 @@
 #include <command/iCommand.hpp>
 #include <shape/shapeArgs.hpp>
 
-class rotateCommand final : public iCommand {
+class RotateCommand final : public ICommand {
 public:
-    explicit rotateCommand(rotationArgs args);
+    explicit RotateCommand(RotationArgs args);
 
-    void execute(scene& scene) const override;
+    void execute(Scene& scene) const override;
 
 private:
-    rotationArgs args_;
+    RotationArgs args_;
 };
 
 #endif

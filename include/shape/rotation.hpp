@@ -3,14 +3,14 @@
 
 #include <shape/shapeArgs.hpp>
 
-class rotation {
+class Rotation {
 public:
-    explicit rotation(rotationArgs args);
+    explicit Rotation(RotationArgs args);
 
-    vector2D apply(vector2D point) const;
+    Vector2D apply(Vector2D point) const;
 
 private:
-    rotationArgs args_;
+    RotationArgs args_;
     double cosine_{};
     double sine_{};
 };

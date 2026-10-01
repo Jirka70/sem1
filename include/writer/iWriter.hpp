@@ -5,15 +5,15 @@
 
 #include <iosfwd>
 
-class scene;
+class Scene;
 
-class iWriter {
+class IWriter {
 public:
-    virtual ~iWriter() = default;
+    virtual ~IWriter() = default;
 
     virtual void write(
-        const scene& scene,
-        canvasSize size,
+        const Scene& scene,
+        CanvasSize size,
         std::ostream& output
     ) const = 0;
 };

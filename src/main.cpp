@@ -4,7 +4,7 @@
 #include <iostream>
 #include <error/applicationError.hpp>
 
-void print_result(const applicationResult& result) {
+void print_result(const ApplicationResult& result) {
     if (result.status == applicationStatus::OK) {
         std::cout << result.processed_lines 
             << std::endl 
@@ -17,7 +17,7 @@ void print_result(const applicationResult& result) {
 }
 
 int main(int argc, char* argv[]) {
-    application app;
+    Application app;
     const auto result = app.run(argc, argv);
 
     print_result(result);

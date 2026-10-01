@@ -3,23 +3,23 @@
 #include <writer/pgmWriter.hpp>
 #include <error/applicationError.hpp>
 
-using writerFactory = std::unique_ptr<iWriter> (*)();
+using writerFactory = std::unique_ptr<IWriter> (*)();
 
 template<typename writerType>
-std::unique_ptr<iWriter> make_writer_t() {
+std::unique_ptr<IWriter> make_writer_t() {
     return std::make_unique<writerType>();
 }
 
 const std::unordered_map<std::string_view, writerFactory> factories{
-    {".svg", make_writer_t<svgWriter>},
-    {".pgm", make_writer_t<pgmWriter>}
+    {".svg", make_writer_t<SvgWriter>},
+    {".pgm", make_writer_t<PgmWriter>}
 };
 
-std::unique_ptr<iWriter> create_writer(const std::filesystem::path& output_path) {
+std::unique_ptr<IWriter> create_writer(const std::filesystem::path& output_path) {
     const auto extension = output_path.extension().string();
 
     if (!factories.contains(extension)) {
-        throw applicationError{
+        throw ApplicationError{
             exitCode::OUTPUT_ERROR,
             "Nepodporovany vystupni format: " + extension
         };

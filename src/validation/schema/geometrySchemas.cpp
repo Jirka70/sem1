@@ -5,27 +5,27 @@
 
 
 
-const schema<vector2D> vectorSchema{
+const schema<Vector2D> vectorSchema{
     {
         "vector",
         "Slozky vektoru musi byt konecna cisla",
-        [](const vector2D& vector) {
+        [](const Vector2D& vector) {
             return std::isfinite(vector.x)
                 && std::isfinite(vector.y);
         }
     }
 };
 
-bool is_valid_vector_2d(const vector2D& vec) {
+bool is_valid_vector_2d(const Vector2D& vec) {
     return !validate_t(vectorSchema, vec).has_value();
 }
 
 
-const schema<vector2D> scaleFactorsSchema{
+const schema<Vector2D> scaleFactorsSchema{
     {
         "scale",
         "Meritka musi byt konecna nenulova cisla",
-        [](const vector2D& factors) {
+        [](const Vector2D& factors) {
             return is_valid_vector_2d(factors)
                 && factors.x != 0.0
                 && factors.y != 0.0;
@@ -33,55 +33,55 @@ const schema<vector2D> scaleFactorsSchema{
     }
 };
 
-const schema<circleArgs> circleSchema{
+const schema<CircleArgs> circleSchema{
     {
         "center",
         "Souradnice stredu musi byt konecna cisla",
-        [](const circleArgs& args) {
+        [](const CircleArgs& args) {
             return is_valid_vector_2d(args.center);
         }
     },
     {
         "radius",
         "Polomer musi byt konecne cislo vetsi nez nula",
-        [](const circleArgs& args) {
+        [](const CircleArgs& args) {
             return std::isfinite(args.radius)
                 && args.radius > 0.0;
         }
     }
 };
 
-const schema<lineArgs> lineSchema{
+const schema<LineArgs> lineSchema{
     {
         "start",
         "Pocatecni bod musi mit konecne souradnice",
-        [](const lineArgs& args) {
+        [](const LineArgs& args) {
             return is_valid_vector_2d(args.start);
         }
     },
     {
         "end",
         "Koncovy bod musi mit konecne souradnice",
-        [](const lineArgs& args) {
+        [](const LineArgs& args) {
             return is_valid_vector_2d(args.end);
         }
     },
     {
         "points",
         "Pocatecni a koncovy bod nesmi byt totozne",
-        [](const lineArgs& args) {
+        [](const LineArgs& args) {
             return args.start.x != args.end.x
                 || args.start.y != args.end.y;
         }
     }
 };
 
-const schema<rectangleArgs> rectangleSchema{
+const schema<RectangleArgs> rectangleSchema{
     {
         "corners",
         "Vrcholy musi mit konecne souradnice",
-        [](const rectangleArgs& args) {
-            for (const vector2D corner : args.corners) {
+        [](const RectangleArgs& args) {
+            for (const Vector2D corner : args.corners) {
                 if (!is_valid_vector_2d(corner)) {
                     return false;
                 }
@@ -93,11 +93,11 @@ const schema<rectangleArgs> rectangleSchema{
     {
         "corners",
         "Vsechny vrcholy musi byt navzajem ruzne",
-        [](const rectangleArgs& args) {
+        [](const RectangleArgs& args) {
             for (std::size_t i = 0; i < args.corners.size(); ++i) {
                 for (std::size_t j = i + 1; j < args.corners.size(); ++j) {
-                    const vector2D& first = args.corners[i];
-                    const vector2D& second = args.corners[j];
+                    const Vector2D& first = args.corners[i];
+                    const Vector2D& second = args.corners[j];
 
                     if (first.x == second.x && first.y == second.y) {
                         return false;
@@ -110,35 +110,35 @@ const schema<rectangleArgs> rectangleSchema{
     }
 };
 
-const schema<rotationArgs> rotationSchema{
+const schema<RotationArgs> rotationSchema{
     {
         "center",
         "Stred rotace musi mit konecne souradnice",
-        [](const rotationArgs& args) {
+        [](const RotationArgs& args) {
             return is_valid_vector_2d(args.center);
         }
     },
     {
         "angle",
         "Uhel rotace musi byt konecne cislo",
-        [](const rotationArgs& args) {
+        [](const RotationArgs& args) {
             return std::isfinite(args.angleDegrees);
         }
     }
 };
 
-const schema<scaleArgs> scaleSchema{
+const schema<ScaleArgs> scaleSchema{
     {
         "center",
         "Stred skalovani musi mit konecne souradnice",
-        [](const scaleArgs& args) {
+        [](const ScaleArgs& args) {
             return is_valid_vector_2d(args.center);
         }
     },
     {
         "factor",
         "Faktor skalovani musi byt konecny a nenulovy",
-        [](const scaleArgs& args) {
+        [](const ScaleArgs& args) {
             return std::isfinite(args.factor)
                 && args.factor != 0.0;
         }

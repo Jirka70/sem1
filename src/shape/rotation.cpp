@@ -5,7 +5,7 @@
 #include <cmath>
 #include <numbers>
 
-rotation::rotation(rotationArgs args)
+Rotation::Rotation(RotationArgs args)
     : args_(args) {
     require_validation_t(rotationSchema, args_);
 
@@ -26,13 +26,13 @@ rotation::rotation(rotationArgs args)
     sine_ = std::sin(radians);
 }
 
-vector2D rotation::apply(vector2D point) const {
+Vector2D Rotation::apply(Vector2D point) const {
     require_validation_t(vectorSchema, point);
 
     const double relativeX = point.x - args_.center.x;
     const double relativeY = point.y - args_.center.y;
 
-    const vector2D result{
+    const Vector2D result{
         .x = args_.center.x
             + relativeX * cosine_
             - relativeY * sine_,

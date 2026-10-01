@@ -5,13 +5,13 @@
 
 #include <iosfwd>
 
-class svgShapeVisitor final : public iShapeVisitor {
+class SvgShapeVisitor final : public IShapeVisitor {
 public:
-    explicit svgShapeVisitor(std::ostream& output);
+    explicit SvgShapeVisitor(std::ostream& output);
 
-    void visit(const circle& circle) override;
-    void visit(const line& line) override;
-    void visit(const rectangle& rectangle) override;
+    void visit(const Circle& circle) override;
+    void visit(const Line& line) override;
+    void visit(const Rectangle& rectangle) override;
 
 private:
     std::ostream& output_;

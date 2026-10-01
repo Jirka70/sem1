@@ -8,9 +8,9 @@
 #include <stdexcept>
 #include <string>
 
-void svgWriter::write(
-    const scene& scene,
-    canvasSize size,
+void SvgWriter::write(
+    const Scene& scene,
+    CanvasSize size,
     std::ostream& output
 ) const {
     if (size.width <= 0 || size.height <= 0) {
@@ -29,14 +29,14 @@ void svgWriter::write(
            << "  <g fill=\"none\" stroke=\"black\" stroke-width=\"2\""
               " stroke-linecap=\"round\" stroke-linejoin=\"round\">" << std::endl;
 
-    svgShapeVisitor visitor{output};
+    SvgShapeVisitor visitor{output};
     for (const auto& shape : scene.shapes()) {
         shape->accept(visitor);
     }
 
     output << "  </g>" << std::endl << "</svg>" << std::endl;
     if (!output) {
-        throw applicationError{exitCode::OUTPUT_ERROR,
+        throw ApplicationError{exitCode::OUTPUT_ERROR,
             "Chyba pri zapisu SVG vystupu"};
     }
 }

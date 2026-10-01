@@ -18,7 +18,7 @@ static constexpr double STROKE_WIDTH_PX = 2.0;
 static constexpr double HALF_STROKE_PX = STROKE_WIDTH_PX / 2.0;
 static constexpr double PIXEL_CENTER_OFFSET = 0.5;
 
-pgmShapeVisitor::pgmShapeVisitor(canvasSize size)
+PgmShapeVisitor::PgmShapeVisitor(CanvasSize size)
     : size_(size) {
     require_validation_t(canvasSizeSchema, size);  
 
@@ -26,7 +26,7 @@ pgmShapeVisitor::pgmShapeVisitor(canvasSize size)
     const auto height = static_cast<std::size_t>(size.height);
 
     if (width > pixels_.max_size() / height) {
-        throw applicationError{
+        throw ApplicationError{
             exitCode::OUTPUT_ERROR,
             "Platno je prilis velke pro PGM vystup"
         };
@@ -36,11 +36,11 @@ pgmShapeVisitor::pgmShapeVisitor(canvasSize size)
 }
 
 std::span<const unsigned char>
-pgmShapeVisitor::pixels() const noexcept {
+PgmShapeVisitor::pixels() const noexcept {
     return {pixels_.data(), pixels_.size()};
 }
 
-pgmShapeVisitor::pixelBounds pgmShapeVisitor::clipped_bounds(
+PgmShapeVisitor::PixelBounds PgmShapeVisitor::clipped_bounds(
     double left,
     double top,
     double right,
@@ -66,7 +66,7 @@ pgmShapeVisitor::pixelBounds pgmShapeVisitor::clipped_bounds(
     };
 }
 
-void pgmShapeVisitor::set_black(int x, int y) {
+void PgmShapeVisitor::set_black(int x, int y) {
     const auto index =
         static_cast<std::size_t>(y)
         * static_cast<std::size_t>(size_.width)
@@ -75,12 +75,12 @@ void pgmShapeVisitor::set_black(int x, int y) {
     pixels_[index] = BLACK;
 }
 
-void pgmShapeVisitor::visit(const circle& circle) {
-    const vector2D center = circle.center();
+void PgmShapeVisitor::visit(const Circle& circle) {
+    const Vector2D center = circle.center();
     const double radius = circle.radius();
     const double extent = radius + HALF_STROKE_PX;
 
-    const pixelBounds bounds = clipped_bounds(
+    const PixelBounds bounds = clipped_bounds(
         center.x - extent,
         center.y - extent,
         center.x + extent,
@@ -104,16 +104,16 @@ void pgmShapeVisitor::visit(const circle& circle) {
     }
 }
 
-void pgmShapeVisitor::draw_segment(
-    vector2D start,
-    vector2D end
+void PgmShapeVisitor::draw_segment(
+    Vector2D start,
+    Vector2D end
 ) {
     const double dx = end.x - start.x;
     const double dy = end.y - start.y;
     const double length = std::hypot(dx, dy);
 
     if (!std::isfinite(length) || length <= 0.0) {
-        throw applicationError{
+        throw ApplicationError{
             exitCode::OUTPUT_ERROR,
             "Usecku nelze rasterizovat: neplatna delka"
         };
@@ -122,7 +122,7 @@ void pgmShapeVisitor::draw_segment(
     const double direction_x = dx / length;
     const double direction_y = dy / length;
 
-    const pixelBounds bounds = clipped_bounds(
+    const PixelBounds bounds = clipped_bounds(
         std::min(start.x, end.x) - HALF_STROKE_PX,
         std::min(start.y, end.y) - HALF_STROKE_PX,
         std::max(start.x, end.x) + HALF_STROKE_PX,
@@ -167,11 +167,11 @@ void pgmShapeVisitor::draw_segment(
     }
 }
 
-void pgmShapeVisitor::visit(const line& line) {
+void PgmShapeVisitor::visit(const Line& line) {
     draw_segment(line.start(), line.end());
 }
 
-void pgmShapeVisitor::visit(const rectangle& rectangle) {
+void PgmShapeVisitor::visit(const Rectangle& rectangle) {
     const auto& corners = rectangle.corners();
 
     for (std::size_t i = 0; i < corners.size(); ++i) {

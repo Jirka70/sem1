@@ -8,27 +8,27 @@
 #include <string>
 #include <vector>
 
-struct validationError {
+struct ValidationError {
     std::string field;
     std::string message;
 };
 
 template<typename valueType>
-struct rule {
+struct Rule {
     std::string field;
     std::string message;
     std::function<bool(const valueType&)> checkFunction;
 };
 
 template<typename valueType>
-using schema = std::vector<rule<valueType>>;
+using schema = std::vector<Rule<valueType>>;
 
 template<typename valueType>
 [[nodiscard]]
-std::optional<validationError> validate_t(const schema<valueType>& schema, const valueType& value) {
-    for (const rule<valueType>& rule : schema) {
+std::optional<ValidationError> validate_t(const schema<valueType>& schema, const valueType& value) {
+    for (const Rule<valueType>& rule : schema) {
         if (!rule.checkFunction(value)) {
-            return validationError{
+            return ValidationError{
                 rule.field, 
                 rule.message
             };

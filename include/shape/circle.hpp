@@ -6,26 +6,26 @@
 
 #include <memory>
 
-class circle final : public iShape {
+class Circle final : public IShape {
 public:
-    explicit circle(circleArgs args);
+    explicit Circle(CircleArgs args);
 
-    void accept(iShapeVisitor& visitor) const override;
+    void accept(IShapeVisitor& visitor) const override;
 
-    vector2D center() const;
+    Vector2D center() const;
 
     double radius() const;
 
-    std::unique_ptr<iShape> operator+(vector2D offset) const override;
+    std::unique_ptr<IShape> operator+(Vector2D offset) const override;
 
-    std::unique_ptr<iShape> operator-(vector2D offset) const override;
+    std::unique_ptr<IShape> operator-(Vector2D offset) const override;
 
-    std::unique_ptr<iShape> operator*(vector2D factors) const override;
+    std::unique_ptr<IShape> operator*(Vector2D factors) const override;
 
-    std::unique_ptr<iShape> rotate(const rotation& rotation) const override;
+    std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
 
 private:
-    circleArgs args_{};
+    CircleArgs args_{};
 };
 
 #endif

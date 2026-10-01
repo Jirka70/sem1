@@ -2,26 +2,26 @@
 #include <shape/iShapeVisitor.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-circle::circle(circleArgs args) : args_(args) {
+Circle::Circle(CircleArgs args) : args_(args) {
     require_validation_t(circleSchema, args_);
 }
 
-void circle::accept(iShapeVisitor& visitor) const {
+void Circle::accept(IShapeVisitor& visitor) const {
     visitor.visit(*this);
 }
 
-vector2D circle::center() const {
+Vector2D Circle::center() const {
     return args_.center;
 }
 
-double circle::radius() const {
+double Circle::radius() const {
     return args_.radius;
 }
 
-std::unique_ptr<iShape> circle::operator+(vector2D offset) const {
+std::unique_ptr<IShape> Circle::operator+(Vector2D offset) const {
     require_validation_t(vectorSchema, offset);
 
-    const circleArgs result{
+    const CircleArgs result{
         .center = {
             .x = args_.center.x + offset.x,
             .y = args_.center.y + offset.y
@@ -29,15 +29,15 @@ std::unique_ptr<iShape> circle::operator+(vector2D offset) const {
         .radius = args_.radius
     };
 
-    return std::make_unique<circle>(result);
+    return std::make_unique<Circle>(result);
 }
 
-std::unique_ptr<iShape> circle::operator-(vector2D offset) const {
+std::unique_ptr<IShape> Circle::operator-(Vector2D offset) const {
     require_validation_t(vectorSchema, offset);
-    return *this + vector2D{-offset.x, -offset.y};
+    return *this + Vector2D{-offset.x, -offset.y};
 }
 
-std::unique_ptr<iShape> circle::operator*(vector2D factors) const {
+std::unique_ptr<IShape> Circle::operator*(Vector2D factors) const {
     require_validation_t(vectorSchema, factors);
     const double xScale = std::abs(factors.x);
     const double yScale = std::abs(factors.y);
@@ -49,7 +49,7 @@ std::unique_ptr<iShape> circle::operator*(vector2D factors) const {
         };
     }
 
-    const circleArgs result{
+    const CircleArgs result{
         .center = {
             .x = args_.center.x * factors.x,
             .y = args_.center.y * factors.y
@@ -57,14 +57,14 @@ std::unique_ptr<iShape> circle::operator*(vector2D factors) const {
         .radius = args_.radius * xScale
     };
 
-    return std::make_unique<circle>(result);
+    return std::make_unique<Circle>(result);
 }
 
-std::unique_ptr<iShape> circle::rotate(const rotation& rotation) const {
-   const circleArgs result{
+std::unique_ptr<IShape> Circle::rotate(const Rotation& rotation) const {
+   const CircleArgs result{
         .center = rotation.apply(args_.center),
         .radius = args_.radius
     };
 
-    return std::make_unique<circle>(result);
+    return std::make_unique<Circle>(result);
 }

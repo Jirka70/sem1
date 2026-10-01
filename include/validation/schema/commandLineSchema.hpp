@@ -6,6 +6,6 @@
 
 
 
-extern const schema<commandLineInput> commandLineSchema;
+extern const schema<CommandLineInput> commandLineSchema;
 
 #endif

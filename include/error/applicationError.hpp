@@ -5,9 +5,9 @@
 #include <exitCode.hpp>
 
 
-class applicationError : public std::runtime_error {
+class ApplicationError : public std::runtime_error {
 public:
-    applicationError(exitCode code, const std::string& message) : std::runtime_error(message), code_(code) {}
+    ApplicationError(exitCode code, const std::string& message) : std::runtime_error(message), code_(code) {}
 
     exitCode code() const noexcept {    
         return code_;

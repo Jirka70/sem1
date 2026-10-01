@@ -8,16 +8,16 @@
 #include <shape/circle.hpp>
 
 
-class drawCircleCommand final : public iCommand {
+class DrawCircleCommand final : public ICommand {
 public: 
-    explicit drawCircleCommand(const circle& args) : args_(args) {}
+    explicit DrawCircleCommand(const Circle& args) : args_(args) {}
 
-    void execute(scene& scene) const override {
-        scene.add(std::make_unique<circle>(args_));
+    void execute(Scene& scene) const override {
+        scene.add(std::make_unique<Circle>(args_));
     }
 
 private:
-    const circle args_;
+    const Circle args_;
 };
 
 #endif

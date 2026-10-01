@@ -21,7 +21,7 @@ bool read_line(std::istream& input, std::string& line, std::size_t line_number) 
     input.getline(buffer.data(), buffer.size());
 
     if (input.bad()) {
-        throw applicationError{exitCode::INPUT_ERROR,
+        throw ApplicationError{exitCode::INPUT_ERROR,
             "Chyba pri cteni radku " + std::to_string(line_number)};
     }
 
@@ -30,7 +30,7 @@ bool read_line(std::istream& input, std::string& line, std::size_t line_number) 
     if (isEndOfFile && isBufferEmpty) return false;
 
     if (input.fail()) {
-        throw applicationError{exitCode::INPUT_ERROR, 
+        throw ApplicationError{exitCode::INPUT_ERROR, 
             "Radek " + std::to_string(line_number) 
                 + ": Maximalni delka je " 
                 + std::to_string(MAX_LINE_BYTES) 

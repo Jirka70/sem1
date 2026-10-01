@@ -5,34 +5,34 @@
 #include <cstddef>
 
 
-struct vector2D {
+struct Vector2D {
     double x;
     double y;
 };
 
-struct circleArgs {
-    vector2D center;
+struct CircleArgs {
+    Vector2D center;
     double radius;
 };
 
-struct lineArgs {
-    vector2D start;
-    vector2D end;
+struct LineArgs {
+    Vector2D start;
+    Vector2D end;
 };
 
 inline constexpr std::size_t RECTANGLE_SIDES_COUNT = 4;
 
-struct rectangleArgs {
-    std::array<vector2D, RECTANGLE_SIDES_COUNT> corners;
+struct RectangleArgs {
+    std::array<Vector2D, RECTANGLE_SIDES_COUNT> corners;
 };
 
-struct rotationArgs {
-    vector2D center;
+struct RotationArgs {
+    Vector2D center;
     double angleDegrees;
 };
 
-struct scaleArgs {
-    vector2D center;
+struct ScaleArgs {
+    Vector2D center;
     double factor;
 };
 

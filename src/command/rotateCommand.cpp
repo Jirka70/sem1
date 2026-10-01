@@ -4,11 +4,11 @@
 #include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-rotateCommand::rotateCommand(rotationArgs args)
+RotateCommand::RotateCommand(RotationArgs args)
     : args_(args) {
     require_validation_t(rotationSchema, args_);
 }
 
-void rotateCommand::execute(scene& scene) const {
+void RotateCommand::execute(Scene& scene) const {
     scene.rotate(args_);
 }

@@ -1,17 +1,17 @@
 #ifndef SEM1_SHAPE_I_SHAPE_VISITOR_HPP
 #define SEM1_SHAPE_I_SHAPE_VISITOR_HPP
 
-class circle;
-class line;
-class rectangle;
+class Circle;
+class Line;
+class Rectangle;
 
-class iShapeVisitor {
+class IShapeVisitor {
 public:
-    virtual ~iShapeVisitor() = default;
+    virtual ~IShapeVisitor() = default;
 
-    virtual void visit(const circle& circle) = 0;
-    virtual void visit(const line& line) = 0;
-    virtual void visit(const rectangle& rectangle) = 0;
+    virtual void visit(const Circle& circle) = 0;
+    virtual void visit(const Line& line) = 0;
+    virtual void visit(const Rectangle& rectangle) = 0;
 };
 
 #endif

@@ -6,28 +6,28 @@
 
 #include <memory>
 
-class iShapeVisitor;
+class IShapeVisitor;
 
-class iShape {
+class IShape {
 public:
-    virtual ~iShape() = default;
+    virtual ~IShape() = default;
 
-    virtual void accept(iShapeVisitor& visitor) const = 0;
+    virtual void accept(IShapeVisitor& visitor) const = 0;
 
-    virtual std::unique_ptr<iShape> operator+(
-        vector2D offset
+    virtual std::unique_ptr<IShape> operator+(
+        Vector2D offset
     ) const = 0;
 
-    virtual std::unique_ptr<iShape> operator-(
-        vector2D offset
+    virtual std::unique_ptr<IShape> operator-(
+        Vector2D offset
     ) const = 0;
 
-    virtual std::unique_ptr<iShape> operator*(
-        vector2D factors
+    virtual std::unique_ptr<IShape> operator*(
+        Vector2D factors
     ) const = 0;
 
-    virtual std::unique_ptr<iShape> rotate(
-        const rotation& rotation
+    virtual std::unique_ptr<IShape> rotate(
+        const Rotation& rotation
     ) const = 0;
 };
 

@@ -9,8 +9,8 @@
 #include <command/iCommand.hpp>
 #include <util/parse/text.hpp>
 
-using commandFactory = std::function<std::unique_ptr<iCommand>(const tokens&)>;
+using commandFactory = std::function<std::unique_ptr<ICommand>(const tokens&)>;
 
-std::unique_ptr<iCommand> parse_command(const tokens& tokens, size_t line_number);
+std::unique_ptr<ICommand> parse_command(const tokens& tokens, size_t line_number);
 
 #endif

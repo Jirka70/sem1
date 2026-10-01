@@ -8,7 +8,7 @@
 
 constexpr int EXPECTED_ARGUMENT_COUNT{4};
 
-bool has_expected_arguments(const commandLineInput& input) {
+bool has_expected_arguments(const CommandLineInput& input) {
     return input.argc == EXPECTED_ARGUMENT_COUNT
         && input.argv != nullptr
         && input.argv[1] != nullptr
@@ -41,18 +41,18 @@ bool is_valid_size(std::string_view text) {
 }
     
 
-const schema<commandLineInput> commandLineSchema({
+const schema<CommandLineInput> commandLineSchema({
     {
         "arguments",
         "Pouziti: sem1 <vstup> <vystup> <sirka>x<vyska>",
-        [](const commandLineInput& input) {
+        [](const CommandLineInput& input) {
             return has_expected_arguments(input);
         }
     },
     {
         "input",
         "Cesta ke vstupnimu souboru nesmi byt prazdna",
-        [](const commandLineInput& input) {
+        [](const CommandLineInput& input) {
             return has_expected_arguments(input)
                 && input.argv[1][0] != '\0';
         }
@@ -60,7 +60,7 @@ const schema<commandLineInput> commandLineSchema({
     {
         "output",
         "Cesta k vystupnimu souboru nesmi byt prazdna",
-        [](const commandLineInput& input) {
+        [](const CommandLineInput& input) {
             return has_expected_arguments(input)
                 && input.argv[2][0] != '\0';
         }
@@ -68,7 +68,7 @@ const schema<commandLineInput> commandLineSchema({
     {
         "size",
         "Ocekavany format je napriklad 800x600, rozmery musi byt kladne",
-        [](const commandLineInput& input) {
+        [](const CommandLineInput& input) {
             return has_expected_arguments(input)
                 && is_valid_size(input.argv[3]);
         }

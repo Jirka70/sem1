@@ -4,14 +4,14 @@
 #include <command/iCommand.hpp>
 #include <shape/shapeArgs.hpp>
 
-class translateCommand final : public iCommand {
+class TranslateCommand final : public ICommand {
 public:
-    explicit translateCommand(vector2D offset);
+    explicit TranslateCommand(Vector2D offset);
 
-    void execute(scene& scene) const override;
+    void execute(Scene& scene) const override;
 
 private:
-    vector2D offset_;
+    Vector2D offset_;
 };
 
 #endif

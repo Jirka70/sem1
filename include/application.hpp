@@ -10,16 +10,16 @@ enum class applicationStatus {
     FAILURE
 };
 
-struct applicationResult {
+struct ApplicationResult {
     applicationStatus status;
     ::exitCode exitCode;
     std::size_t processed_lines;
     std::string error_message;
 };
 
-class application {
+class Application {
 public: 
-    applicationResult run(int argc, char* argv[]);
+    ApplicationResult run(int argc, char* argv[]);
 };
 
 #endif

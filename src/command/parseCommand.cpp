@@ -23,13 +23,13 @@
 
 constexpr size_t PARAM_START_INDEX = 1;
 
-std::unique_ptr<drawCircleCommand> parse_circle_command(const tokens& validated_tokens) {
+std::unique_ptr<DrawCircleCommand> parse_circle_command(const tokens& validated_tokens) {
     require_validation_t(circleTokensSchema, validated_tokens);
 
     const auto& circle_parameters = std::span<const std::string_view>{validated_tokens}
         .subspan(PARAM_START_INDEX);
 
-    const circleArgs args = circleArgs{
+    const CircleArgs args = CircleArgs{
         .center = {
             .x = parse_number_t<double>(circle_parameters[0]).value(),
             .y = parse_number_t<double>(circle_parameters[1]).value()
@@ -37,19 +37,19 @@ std::unique_ptr<drawCircleCommand> parse_circle_command(const tokens& validated_
         .radius = parse_number_t<double>(circle_parameters[2]).value()
     };
 
-    const circle circle{args};
+    const Circle circle{args};
 
-    return std::make_unique<drawCircleCommand>(circle);
+    return std::make_unique<DrawCircleCommand>(circle);
 }
 
-std::unique_ptr<drawLineCommand> parse_line_command(const tokens& validated_tokens) {
+std::unique_ptr<DrawLineCommand> parse_line_command(const tokens& validated_tokens) {
     require_validation_t(lineTokensSchema, validated_tokens);
 
     const auto parameters = std::span<const std::string_view>{validated_tokens}
         .subspan(PARAM_START_INDEX);
 
     
-    const lineArgs args = lineArgs{
+    const LineArgs args = LineArgs{
         .start = {
             .x = parse_number_t<double>(parameters[0]).value(),
             .y = parse_number_t<double>(parameters[1]).value()
@@ -60,11 +60,11 @@ std::unique_ptr<drawLineCommand> parse_line_command(const tokens& validated_toke
         }
     };
 
-    const line line{args};    
-    return std::make_unique<drawLineCommand>(line);
+    const Line line{args};    
+    return std::make_unique<DrawLineCommand>(line);
 }
 
-std::unique_ptr<drawRectangleCommand> parse_rectangle_command(const tokens& validated_tokens) {
+std::unique_ptr<DrawRectangleCommand> parse_rectangle_command(const tokens& validated_tokens) {
     require_validation_t(rectangleTokensSchema, validated_tokens);
 
     const auto parameters = std::span<const std::string_view>{validated_tokens}
@@ -77,28 +77,28 @@ std::unique_ptr<drawRectangleCommand> parse_rectangle_command(const tokens& vali
     const double right = left + width;
     const double bottom = top + height;
 
-    const rectangleArgs args = rectangleArgs{
+    const RectangleArgs args = RectangleArgs{
         .corners = {
-            vector2D{.x = left, .y = top},
-            vector2D{.x = right, .y = top},
-            vector2D{.x = right, .y = bottom},
-            vector2D{.x = left, .y = bottom}
+            Vector2D{.x = left, .y = top},
+            Vector2D{.x = right, .y = top},
+            Vector2D{.x = right, .y = bottom},
+            Vector2D{.x = left, .y = bottom}
         }
     };
 
-    const rectangle rectangle{args};
+    const Rectangle rectangle{args};
 
-    return std::make_unique<drawRectangleCommand>(rectangle);
+    return std::make_unique<DrawRectangleCommand>(rectangle);
 }
 
-std::unique_ptr<translateCommand> parse_translate_command(const tokens& validated_tokens) {
+std::unique_ptr<TranslateCommand> parse_translate_command(const tokens& validated_tokens) {
     require_validation_t(translateTokensSchema, validated_tokens);
 
     const auto parameters =
         std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
-    const vector2D args = vector2D{
+    const Vector2D args = Vector2D{
         .x = static_cast<double>(
             parse_number_t<int>(parameters[0]).value()
         ),
@@ -107,17 +107,17 @@ std::unique_ptr<translateCommand> parse_translate_command(const tokens& validate
         )
     };
 
-    return std::make_unique<translateCommand>(args);
+    return std::make_unique<TranslateCommand>(args);
 }
 
-std::unique_ptr<rotateCommand> parse_rotate_command(const tokens& validated_tokens) {
+std::unique_ptr<RotateCommand> parse_rotate_command(const tokens& validated_tokens) {
     require_validation_t(rotateTokensSchema, validated_tokens);
 
     const auto parameters =
         std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
-    const rotationArgs args = rotationArgs{
+    const RotationArgs args = RotationArgs{
         .center = {
             .x = static_cast<double>(
                 parse_number_t<int>(parameters[0]).value()
@@ -129,17 +129,17 @@ std::unique_ptr<rotateCommand> parse_rotate_command(const tokens& validated_toke
         .angleDegrees = parse_number_t<double>(parameters[2]).value()
     };
 
-    return std::make_unique<rotateCommand>(args);
+    return std::make_unique<RotateCommand>(args);
 }
 
-std::unique_ptr<scaleCommand> parse_scale_command(const tokens& validated_tokens) {
+std::unique_ptr<ScaleCommand> parse_scale_command(const tokens& validated_tokens) {
     require_validation_t(scaleTokensSchema, validated_tokens);
 
     const auto parameters =
         std::span<const std::string_view>{validated_tokens}
             .subspan(PARAM_START_INDEX);
 
-    const scaleArgs args = scaleArgs{
+    const ScaleArgs args = ScaleArgs{
         .center = {
             .x = static_cast<double>(
                 parse_number_t<int>(parameters[0]).value()
@@ -151,7 +151,7 @@ std::unique_ptr<scaleCommand> parse_scale_command(const tokens& validated_tokens
         .factor = parse_number_t<double>(parameters[2]).value()
     };
 
-    return std::make_unique<scaleCommand>(args);
+    return std::make_unique<ScaleCommand>(args);
 }
 
 static const std::unordered_map<std::string_view, commandFactory>factories{
@@ -164,7 +164,7 @@ static const std::unordered_map<std::string_view, commandFactory>factories{
 };
 
 
-std::unique_ptr<iCommand> parse_command(const tokens& tokens, size_t line_number) {
+std::unique_ptr<ICommand> parse_command(const tokens& tokens, size_t line_number) {
     try {
         const std::string_view& commant_type = tokens.front();
         if (!factories.contains(commant_type)) {
@@ -177,6 +177,6 @@ std::unique_ptr<iCommand> parse_command(const tokens& tokens, size_t line_number
         return factory_function(tokens);
 
     } catch (const std::invalid_argument& error) {
-        throw applicationError{exitCode::INPUT_ERROR, "Radek " + std::to_string(line_number) + ": " + error.what()};
+        throw ApplicationError{exitCode::INPUT_ERROR, "Radek " + std::to_string(line_number) + ": " + error.what()};
     }
 }

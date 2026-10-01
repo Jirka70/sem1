@@ -3,9 +3,9 @@
 
 #include <writer/iWriter.hpp>
 
-class pgmWriter final : public iWriter {
+class PgmWriter final : public IWriter {
 public:
-    void write(const scene& scene, canvasSize size, std::ostream& output) const override;
+    void write(const Scene& scene, CanvasSize size, std::ostream& output) const override;
 };
 
 #endif
