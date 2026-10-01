@@ -1,31 +1,31 @@
-#ifndef LINE_HPP
-#define LINE_HPP
+#ifndef SEM1_SHAPE_LINE_HPP
+#define SEM1_SHAPE_LINE_HPP
 
-#include <shape/IShape.hpp>
-#include <shape/ShapeArgs.hpp>
+#include <shape/iShape.hpp>
+#include <shape/shapeArgs.hpp>
 
 #include <memory>
 
-class Line final : public IShape {
+class line final : public iShape {
 public:
-    explicit Line(LineArgs args);
+    explicit line(lineArgs args);
 
-    void accept(IShapeVisitor& visitor) const override;
+    void accept(iShapeVisitor& visitor) const override;
 
-    Vector2D start() const;
+    vector2D start() const;
 
-    Vector2D end() const;
+    vector2D end() const;
 
-    std::unique_ptr<IShape> operator+(Vector2D offset) const override;
+    std::unique_ptr<iShape> operator+(vector2D offset) const override;
 
-    std::unique_ptr<IShape> operator-(Vector2D offset) const override;
+    std::unique_ptr<iShape> operator-(vector2D offset) const override;
 
-    std::unique_ptr<IShape> operator*(Vector2D factors) const override;
+    std::unique_ptr<iShape> operator*(vector2D factors) const override;
 
-    std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
+    std::unique_ptr<iShape> rotate(const rotation& rotation) const override;
 
 private:
-    LineArgs args_{};
+    lineArgs args_{};
 };
 
 #endif

@@ -1,13 +1,13 @@
-#include <util/parse/Number.hpp>
+#include <util/parse/number.hpp>
 
 
-template<typename T> requires (std::same_as<T, int> || std::same_as<T, double>)
-std::optional<T> parse_number(std::string_view text) {
+template<typename valueType> requires (std::same_as<valueType, int> || std::same_as<valueType, double>)
+std::optional<valueType> parse_number_t(std::string_view text) {
     if (text.empty()) {
         return std::nullopt;
     }
 
-    T value{};
+    valueType value{};
 
     const auto [end, error] = std::from_chars(
         text.data(),
@@ -23,5 +23,5 @@ std::optional<T> parse_number(std::string_view text) {
     return value;
 }
 
-template std::optional<int> parse_number<int>(std::string_view);
-template std::optional<double> parse_number<double>(std::string_view);
+template std::optional<int> parse_number_t<int>(std::string_view);
+template std::optional<double> parse_number_t<double>(std::string_view);

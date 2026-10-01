@@ -1,9 +1,9 @@
-#ifndef FILE_SCHEMA_HPP
-#define FILE_SCHEMA_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_FILE_SCHEMA_HPP
+#define SEM1_VALIDATION_SCHEMA_FILE_SCHEMA_HPP
 
-#include "validation/Validation.hpp"
+#include "validation/validation.hpp"
 #include <filesystem>
 
-extern const Schema<std::filesystem::path> fileSchema;
+extern const schema<std::filesystem::path> fileSchema;
 
 #endif

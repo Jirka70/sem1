@@ -1,5 +1,5 @@
-#include <util/parse/Text.hpp>
-#include <command/parse/parse_command.hpp>
+#include <util/parse/text.hpp>
+#include <command/parse/parseCommand.hpp>
 
 std::vector<std::string_view> split(std::string_view text, std::string_view separator) {
     if (separator.empty()) {
@@ -43,8 +43,8 @@ std::string_view remove_comment(std::string_view text) noexcept
     return text.substr(0, text.find(COMMENT_START_CHAR));
 }
 
-Tokens tokenize(std::string_view text) {
-    Tokens tokens;
+tokens tokenize(std::string_view text) {
+    tokens tokens;
 
     text = remove_comment(text);
     while (!text.empty()) {

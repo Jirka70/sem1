@@ -1,14 +1,14 @@
-#include <command/TranslateCommand.hpp>
+#include <command/translateCommand.hpp>
 
-#include <Scene.hpp>
-#include <validation/Validation.hpp>
+#include <scene.hpp>
+#include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-TranslateCommand::TranslateCommand(Vector2D offset)
+translateCommand::translateCommand(vector2D offset)
     : offset_(offset) {
-    require_validation(vectorSchema, offset_);
+    require_validation_t(vectorSchema, offset_);
 }
 
-void TranslateCommand::execute(Scene& scene) const {
+void translateCommand::execute(scene& scene) const {
     scene.translate(offset_);
 }

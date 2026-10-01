@@ -1,11 +1,11 @@
-#include "ExitCode.hpp"
-#include "Application.hpp"
+#include "exitCode.hpp"
+#include "application.hpp"
 
 #include <iostream>
-#include <error/ApplicationError.hpp>
+#include <error/applicationError.hpp>
 
-void print_result(const ApplicationResult& result) {
-    if (result.status == ApplicationStatus::OK) {
+void print_result(const applicationResult& result) {
+    if (result.status == applicationStatus::OK) {
         std::cout << result.processed_lines 
             << std::endl 
             << "OK" 
@@ -17,7 +17,7 @@ void print_result(const ApplicationResult& result) {
 }
 
 int main(int argc, char* argv[]) {
-    Application app;
+    application app;
     const auto result = app.run(argc, argv);
 
     print_result(result);

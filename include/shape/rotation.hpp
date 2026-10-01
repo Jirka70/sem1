@@ -1,16 +1,16 @@
-#ifndef ROTATION_HPP
-#define ROTATION_HPP
+#ifndef SEM1_SHAPE_ROTATION_HPP
+#define SEM1_SHAPE_ROTATION_HPP
 
-#include <shape/ShapeArgs.hpp>
+#include <shape/shapeArgs.hpp>
 
-class Rotation {
+class rotation {
 public:
-    explicit Rotation(RotationArgs args);
+    explicit rotation(rotationArgs args);
 
-    Vector2D apply(Vector2D point) const;
+    vector2D apply(vector2D point) const;
 
 private:
-    RotationArgs args_;
+    rotationArgs args_;
     double cosine_{};
     double sine_{};
 };

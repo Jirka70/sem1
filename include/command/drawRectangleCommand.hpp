@@ -1,21 +1,21 @@
-#ifndef DRAW_RECTANGLE_COMMAND_HPP
-#define DRAW_RECTANGLE_COMMAND_HPP
+#ifndef SEM1_COMMAND_DRAW_RECTANGLE_COMMAND_HPP
+#define SEM1_COMMAND_DRAW_RECTANGLE_COMMAND_HPP
 
-#include <Scene.hpp>
-#include <command/ICommand.hpp>
-#include <validation/Validation.hpp>
-#include <shape/Rectangle.hpp>
+#include <scene.hpp>
+#include <command/iCommand.hpp>
+#include <validation/validation.hpp>
+#include <shape/rectangle.hpp>
 
-class DrawRectangleCommand final : public ICommand {
+class drawRectangleCommand final : public iCommand {
 public:
-    explicit DrawRectangleCommand(const Rectangle& args) : args_(args) {}
+    explicit drawRectangleCommand(const rectangle& args) : args_(args) {}
 
-    void execute(Scene& scene) const override {
-        scene.add(std::make_unique<Rectangle>(args_));
+    void execute(scene& scene) const override {
+        scene.add(std::make_unique<rectangle>(args_));
     }
 
 private:
-    const Rectangle args_;
+    const rectangle args_;
 };
 
 #endif

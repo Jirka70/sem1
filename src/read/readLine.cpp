@@ -1,11 +1,11 @@
 #include <read/readLine.hpp>
-#include <error/ApplicationError.hpp>
+#include <error/applicationError.hpp>
 
 constexpr std::size_t MAX_LINE_BYTES = 256;
 constexpr size_t DELIMITER_SIZE{1};
-using LineBuffer = std::array<char, MAX_LINE_BYTES + DELIMITER_SIZE>;
+using lineBuffer = std::array<char, MAX_LINE_BYTES + DELIMITER_SIZE>;
 
-size_t computeLengthOfLine(std::streamsize gcount, bool eof) {
+size_t compute_length_of_line(std::streamsize gcount, bool eof) {
     if (eof) {
         return static_cast<size_t>(gcount);
     }
@@ -14,14 +14,14 @@ size_t computeLengthOfLine(std::streamsize gcount, bool eof) {
 }
 
 [[nodiscard]]
-bool readLine(std::istream& input, std::string& line, std::size_t line_number) {
-    LineBuffer buffer{};
+bool read_line(std::istream& input, std::string& line, std::size_t line_number) {
+    lineBuffer buffer{};
     line.clear();
     
     input.getline(buffer.data(), buffer.size());
 
     if (input.bad()) {
-        throw ApplicationError{ExitCode::input_error,
+        throw applicationError{exitCode::INPUT_ERROR,
             "Chyba pri cteni radku " + std::to_string(line_number)};
     }
 
@@ -30,7 +30,7 @@ bool readLine(std::istream& input, std::string& line, std::size_t line_number) {
     if (isEndOfFile && isBufferEmpty) return false;
 
     if (input.fail()) {
-        throw ApplicationError{ExitCode::input_error, 
+        throw applicationError{exitCode::INPUT_ERROR, 
             "Radek " + std::to_string(line_number) 
                 + ": Maximalni delka je " 
                 + std::to_string(MAX_LINE_BYTES) 
@@ -38,7 +38,7 @@ bool readLine(std::istream& input, std::string& line, std::size_t line_number) {
         };
     }
 
-    const size_t length = computeLengthOfLine(input.gcount(), isEndOfFile);
+    const size_t length = compute_length_of_line(input.gcount(), isEndOfFile);
     line.assign(buffer.data(), length);
 
     return true;

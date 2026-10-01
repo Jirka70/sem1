@@ -1,10 +1,10 @@
-#ifndef OUTPUT_PATH_SCHEMA_HPP
-#define OUTPUT_PATH_SCHEMA_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_OUTPUT_PATH_SCHEMA_HPP
+#define SEM1_VALIDATION_SCHEMA_OUTPUT_PATH_SCHEMA_HPP
 
-#include <validation/Validation.hpp>
+#include <validation/validation.hpp>
 
 #include <filesystem>
 
-extern const Schema<std::filesystem::path> outputPathSchema;
+extern const schema<std::filesystem::path> outputPathSchema;
 
 #endif

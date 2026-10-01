@@ -7,14 +7,14 @@
 #include <string_view>
 #include <system_error>
 #include <unordered_map>
-#include <util/parse/Number.hpp>
+#include <util/parse/number.hpp>
 #include <span>
 
-const Schema<Tokens> tokensSchema {
+const schema<tokens> tokensSchema {
     {
         "command",
         "Chybi prikaz",
-        [](const Tokens& tokens) {
+        [](const tokens& tokens) {
             return !tokens.empty();
         }
     }

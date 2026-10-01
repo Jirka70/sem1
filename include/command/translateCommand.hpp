@@ -1,17 +1,17 @@
-#ifndef TRANSLATE_COMMAND_HPP
-#define TRANSLATE_COMMAND_HPP
+#ifndef SEM1_COMMAND_TRANSLATE_COMMAND_HPP
+#define SEM1_COMMAND_TRANSLATE_COMMAND_HPP
 
-#include <command/ICommand.hpp>
-#include <shape/ShapeArgs.hpp>
+#include <command/iCommand.hpp>
+#include <shape/shapeArgs.hpp>
 
-class TranslateCommand final : public ICommand {
+class translateCommand final : public iCommand {
 public:
-    explicit TranslateCommand(Vector2D offset);
+    explicit translateCommand(vector2D offset);
 
-    void execute(Scene& scene) const override;
+    void execute(scene& scene) const override;
 
 private:
-    Vector2D offset_;
+    vector2D offset_;
 };
 
 #endif

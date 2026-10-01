@@ -1,14 +1,14 @@
-#include <command/RotateCommand.hpp>
+#include <command/rotateCommand.hpp>
 
-#include <Scene.hpp>
-#include <validation/Validation.hpp>
+#include <scene.hpp>
+#include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-RotateCommand::RotateCommand(RotationArgs args)
+rotateCommand::rotateCommand(rotationArgs args)
     : args_(args) {
-    require_validation(rotationSchema, args_);
+    require_validation_t(rotationSchema, args_);
 }
 
-void RotateCommand::execute(Scene& scene) const {
+void rotateCommand::execute(scene& scene) const {
     scene.rotate(args_);
 }

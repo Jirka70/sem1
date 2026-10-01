@@ -1,14 +1,14 @@
-#include <Scene.hpp>
+#include <scene.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-using Transformation = std::function<std::unique_ptr<IShape>(const IShape&)>;
+using transformationType = std::function<std::unique_ptr<iShape>(const iShape&)>;
 
-template<typename Transformation>
-Shapes transformShapes(
-    const Shapes& shapes,
-    const Transformation& transformation
+template<typename transformationType>
+shapesType transform_shapes_t(
+    const shapesType& shapes,
+    const transformationType& transformation
 ) {
-    Shapes result;
+    shapesType result;
     result.reserve(shapes.size());
 
     for (const auto& shape : shapes) {
@@ -18,12 +18,12 @@ Shapes transformShapes(
     return result;
 }
 
-void Scene::translate(Vector2D offset) {
-    require_validation(vectorSchema, offset);
+void scene::translate(vector2D offset) {
+    require_validation_t(vectorSchema, offset);
 
-    auto transformed = transformShapes(
+    auto transformed = transform_shapes_t(
         shapes_,
-        [offset](const IShape& shape) {
+        [offset](const iShape& shape) {
             return shape + offset;
         }
     );
@@ -31,12 +31,12 @@ void Scene::translate(Vector2D offset) {
     shapes_.swap(transformed);
 }
 
-void Scene::rotate(RotationArgs args) {
-    const Rotation rotation{args};
+void scene::rotate(rotationArgs args) {
+    const rotation rotation{args};
 
-    auto transformed = transformShapes(
+    auto transformed = transform_shapes_t(
         shapes_,
-        [&rotation](const IShape& shape) {
+        [&rotation](const iShape& shape) {
             return shape.rotate(rotation);
         }
     );
@@ -44,10 +44,10 @@ void Scene::rotate(RotationArgs args) {
     shapes_.swap(transformed);
 }
 
-void Scene::scale(ScaleArgs args) {
-    require_validation(scaleSchema, args);
+void scene::scale(scaleArgs args) {
+    require_validation_t(scaleSchema, args);
 
-    const Vector2D factors{
+    const vector2D factors{
         args.factor,
         args.factor
     };
@@ -56,9 +56,9 @@ void Scene::scale(ScaleArgs args) {
         return;
     }
 
-    auto transformed = transformShapes(
+    auto transformed = transform_shapes_t(
         shapes_,
-        [center = args.center, factors](const IShape& shape) {
+        [center = args.center, factors](const iShape& shape) {
             auto shifted = shape - center;
             auto scaled = *shifted * factors;
 
@@ -69,7 +69,7 @@ void Scene::scale(ScaleArgs args) {
     shapes_.swap(transformed);
 }
 
-void Scene::add(std::unique_ptr<IShape> shape) {
+void scene::add(std::unique_ptr<iShape> shape) {
     if (!shape) {
         throw std::invalid_argument{"Do sceny nelze pridat prazdny ukazatel"};
     }
@@ -77,6 +77,6 @@ void Scene::add(std::unique_ptr<IShape> shape) {
     shapes_.push_back(std::move(shape));
 }
 
-const std::vector<std::unique_ptr<IShape>>& Scene::shapes() const noexcept {
+const std::vector<std::unique_ptr<iShape>>& scene::shapes() const noexcept {
     return shapes_;
 }

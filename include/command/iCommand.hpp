@@ -1,12 +1,12 @@
-#ifndef DRAWING_ICOMMAND_HPP
-#define DRAWING_ICOMMAND_HPP
+#ifndef SEM1_COMMAND_I_COMMAND_HPP
+#define SEM1_COMMAND_I_COMMAND_HPP
 
-#include <Scene.hpp>
+#include <scene.hpp>
 
-class ICommand {
+class iCommand {
 public:    
-    virtual ~ICommand() = default;
-    virtual void execute(Scene& scene) const = 0;
+    virtual ~iCommand() = default;
+    virtual void execute(scene& scene) const = 0;
 };
 
 #endif

@@ -1,31 +1,31 @@
-#ifndef RECTANGLE_HPP
-#define RECTANGLE_HPP
+#ifndef SEM1_SHAPE_RECTANGLE_HPP
+#define SEM1_SHAPE_RECTANGLE_HPP
 
-#include <shape/IShape.hpp>
-#include <shape/ShapeArgs.hpp>
+#include <shape/iShape.hpp>
+#include <shape/shapeArgs.hpp>
 
 #include <array>
 #include <memory>
 
-class Rectangle final : public IShape {
+class rectangle final : public iShape {
 public:
-    explicit Rectangle(RectangleArgs args);
+    explicit rectangle(rectangleArgs args);
 
-    void accept(IShapeVisitor& visitor) const override;
-    using Corners = std::array<Vector2D, RECTANGLE_SIDES_COUNT>;
+    void accept(iShapeVisitor& visitor) const override;
+    using cornersType = std::array<vector2D, RECTANGLE_SIDES_COUNT>;
 
-    const Corners& corners() const;
+    const cornersType& corners() const;
 
-    std::unique_ptr<IShape> operator+(Vector2D offset) const override;
+    std::unique_ptr<iShape> operator+(vector2D offset) const override;
 
-    std::unique_ptr<IShape> operator-(Vector2D offset) const override;
+    std::unique_ptr<iShape> operator-(vector2D offset) const override;
 
-    std::unique_ptr<IShape> operator*(Vector2D factors) const override;
+    std::unique_ptr<iShape> operator*(vector2D factors) const override;
 
-    std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
+    std::unique_ptr<iShape> rotate(const rotation& rotation) const override;
 
 private:
-    RectangleArgs args_{};
+    rectangleArgs args_{};
 };
 
 #endif

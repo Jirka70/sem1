@@ -1,21 +1,21 @@
-#ifndef DRAW_LINE_COMMAND_HPP
-#define DRAW_LINE_COMMAND_HPP
+#ifndef SEM1_COMMAND_DRAW_LINE_COMMAND_HPP
+#define SEM1_COMMAND_DRAW_LINE_COMMAND_HPP
 
-#include <Scene.hpp>
-#include <command/ICommand.hpp>
-#include <validation/Validation.hpp>
-#include <shape/Line.hpp>
+#include <scene.hpp>
+#include <command/iCommand.hpp>
+#include <validation/validation.hpp>
+#include <shape/line.hpp>
 
-class DrawLineCommand final : public ICommand {
+class drawLineCommand final : public iCommand {
 public:
-    explicit DrawLineCommand(const Line& args) : args_(args) {}
+    explicit drawLineCommand(const line& args) : args_(args) {}
  
-    void execute(Scene& scene) const override {
-        scene.add(std::make_unique<Line>(args_));
+    void execute(scene& scene) const override {
+        scene.add(std::make_unique<line>(args_));
     }
 
 private:
-    const Line args_;
+    const line args_;
 };
 
 #endif

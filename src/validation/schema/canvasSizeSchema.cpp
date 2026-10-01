@@ -1,17 +1,17 @@
 #include <validation/schema/canvasSizeSchema.hpp>
 
-const Schema<CanvasSize> canvasSizeSchema{
+const schema<canvasSize> canvasSizeSchema{
     {
         "width",
         "Sirka platna musi byt vetsi nez nula",
-        [](const CanvasSize& size) {
+        [](const canvasSize& size) {
             return size.width > 0;
         }
     },
     {
         "height",
         "Vyska platna musi byt vetsi nez nula",
-        [](const CanvasSize& size) {
+        [](const canvasSize& size) {
             return size.height > 0;
         }
     }

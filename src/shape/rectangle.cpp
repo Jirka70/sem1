@@ -1,56 +1,56 @@
-#include <shape/Rectangle.hpp>
-#include <shape/IShapeVisitor.hpp>
+#include <shape/rectangle.hpp>
+#include <shape/iShapeVisitor.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-Rectangle::Rectangle(RectangleArgs args) : args_(args) {
-    require_validation(rectangleSchema, args_);
+rectangle::rectangle(rectangleArgs args) : args_(args) {
+    require_validation_t(rectangleSchema, args_);
 }
 
-void Rectangle::accept(IShapeVisitor& visitor) const {
+void rectangle::accept(iShapeVisitor& visitor) const {
     visitor.visit(*this);
 }
 
-const Rectangle::Corners& Rectangle::corners() const {
+const rectangle::cornersType& rectangle::corners() const {
     return args_.corners;
 }
 
-std::unique_ptr<IShape> Rectangle::operator+(Vector2D offset) const {
-    require_validation(vectorSchema, offset);
+std::unique_ptr<iShape> rectangle::operator+(vector2D offset) const {
+    require_validation_t(vectorSchema, offset);
 
-    RectangleArgs result = args_;
+    rectangleArgs result = args_;
 
-    for (Vector2D& corner : result.corners) {
+    for (vector2D& corner : result.corners) {
         corner.x += offset.x;
         corner.y += offset.y;
     }
 
-    return std::make_unique<Rectangle>(result);
+    return std::make_unique<rectangle>(result);
 }
 
-std::unique_ptr<IShape> Rectangle::operator-(Vector2D offset) const {
-    require_validation(vectorSchema, offset);
-    return *this + Vector2D{-offset.x, -offset.y};
+std::unique_ptr<iShape> rectangle::operator-(vector2D offset) const {
+    require_validation_t(vectorSchema, offset);
+    return *this + vector2D{-offset.x, -offset.y};
 }
 
-std::unique_ptr<IShape> Rectangle::operator*(Vector2D factors) const {
-    require_validation(scaleFactorsSchema, factors);
+std::unique_ptr<iShape> rectangle::operator*(vector2D factors) const {
+    require_validation_t(scaleFactorsSchema, factors);
 
-    RectangleArgs result = args_;
+    rectangleArgs result = args_;
 
-    for (Vector2D& corner : result.corners) {
+    for (vector2D& corner : result.corners) {
         corner.x *= factors.x;
         corner.y *= factors.y;
     }
 
-    return std::make_unique<Rectangle>(result);
+    return std::make_unique<rectangle>(result);
 }
 
-std::unique_ptr<IShape> Rectangle::rotate(const Rotation& rotation) const {
-    RectangleArgs result = args_;
+std::unique_ptr<iShape> rectangle::rotate(const rotation& rotation) const {
+    rectangleArgs result = args_;
 
-    for (Vector2D& corner : result.corners) {
+    for (vector2D& corner : result.corners) {
         corner = rotation.apply(corner);
     }
 
-    return std::make_unique<Rectangle>(result);
+    return std::make_unique<rectangle>(result);
 }

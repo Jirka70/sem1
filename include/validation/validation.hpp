@@ -1,5 +1,5 @@
-#ifndef VALIDATION_HPP
-#define VALIDATION_HPP
+#ifndef SEM1_VALIDATION_VALIDATION_HPP
+#define SEM1_VALIDATION_VALIDATION_HPP
 
 #include <iostream>
 #include <optional>
@@ -8,27 +8,27 @@
 #include <string>
 #include <vector>
 
-struct ValidationError {
+struct validationError {
     std::string field;
     std::string message;
 };
 
-template<typename T>
-struct Rule {
+template<typename valueType>
+struct rule {
     std::string field;
     std::string message;
-    std::function<bool(const T&)> checkFunction;
+    std::function<bool(const valueType&)> checkFunction;
 };
 
-template<typename T>
-using Schema = std::vector<Rule<T>>;
+template<typename valueType>
+using schema = std::vector<rule<valueType>>;
 
-template<typename T>
+template<typename valueType>
 [[nodiscard]]
-std::optional<ValidationError> validate(const Schema<T>& schema, const T& value) {
-    for (const Rule<T>& rule : schema) {
+std::optional<validationError> validate_t(const schema<valueType>& schema, const valueType& value) {
+    for (const rule<valueType>& rule : schema) {
         if (!rule.checkFunction(value)) {
-            return ValidationError{
+            return validationError{
                 rule.field, 
                 rule.message
             };
@@ -38,9 +38,9 @@ std::optional<ValidationError> validate(const Schema<T>& schema, const T& value)
     return std::nullopt;
 }
 
-template<typename T>
-void require_validation(const Schema<T>& schema, const T& value) {
-    const auto maybeError = validate(schema, value);
+template<typename valueType>
+void require_validation_t(const schema<valueType>& schema, const valueType& value) {
+    const auto maybeError = validate_t(schema, value);
 
     if (maybeError.has_value()) {
         const auto& error = maybeError.value();

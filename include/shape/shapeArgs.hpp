@@ -1,38 +1,38 @@
-#ifndef SHAPE_ARGS_HPP
-#define SHAPE_ARGS_HPP
+#ifndef SEM1_SHAPE_SHAPE_ARGS_HPP
+#define SEM1_SHAPE_SHAPE_ARGS_HPP
 
 #include <array>
 #include <cstddef>
 
 
-struct Vector2D {
+struct vector2D {
     double x;
     double y;
 };
 
-struct CircleArgs {
-    Vector2D center;
+struct circleArgs {
+    vector2D center;
     double radius;
 };
 
-struct LineArgs {
-    Vector2D start;
-    Vector2D end;
+struct lineArgs {
+    vector2D start;
+    vector2D end;
 };
 
 inline constexpr std::size_t RECTANGLE_SIDES_COUNT = 4;
 
-struct RectangleArgs {
-    std::array<Vector2D, RECTANGLE_SIDES_COUNT> corners;
+struct rectangleArgs {
+    std::array<vector2D, RECTANGLE_SIDES_COUNT> corners;
 };
 
-struct RotationArgs {
-    Vector2D center;
+struct rotationArgs {
+    vector2D center;
     double angleDegrees;
 };
 
-struct ScaleArgs {
-    Vector2D center;
+struct scaleArgs {
+    vector2D center;
     double factor;
 };
 

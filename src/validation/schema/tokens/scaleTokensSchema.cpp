@@ -1,5 +1,5 @@
 #include <validation/schema/tokens/scaleTokensSchema.hpp>
-#include <util/parse/Number.hpp>
+#include <util/parse/number.hpp>
 
 #include <cmath>
 #include <cstddef>
@@ -9,11 +9,11 @@ constexpr std::size_t X_INDEX = 1;
 constexpr std::size_t Y_INDEX = 2;
 constexpr std::size_t FACTOR_INDEX = 3;
 
-const Schema<Tokens> scaleTokensSchema{
+const schema<tokens> scaleTokensSchema{
     {
         "arguments",
         "Ocekavany format: scale <x> <y> <f>",
-        [](const Tokens& tokens) {
+        [](const tokens& tokens) {
             return tokens.size() == EXPECTED_TOKEN_COUNT
                 && tokens.front() == "scale";
         }
@@ -21,17 +21,17 @@ const Schema<Tokens> scaleTokensSchema{
     {
         "center",
         "Souradnice stredu musi byt cela cisla v rozsahu int",
-        [](const Tokens& tokens) {
-            return parse_number<int>(tokens[X_INDEX]).has_value()
-                && parse_number<int>(tokens[Y_INDEX]).has_value();
+        [](const tokens& tokens) {
+            return parse_number_t<int>(tokens[X_INDEX]).has_value()
+                && parse_number_t<int>(tokens[Y_INDEX]).has_value();
         }
     },
     {
         "factor",
         "Faktor musi byt konecne nenulove realne cislo",
-        [](const Tokens& tokens) {
+        [](const tokens& tokens) {
             const auto factor =
-                parse_number<double>(tokens[FACTOR_INDEX]);
+                parse_number_t<double>(tokens[FACTOR_INDEX]);
 
             return factor.has_value()
                 && std::isfinite(*factor)

@@ -1,11 +1,11 @@
-#ifndef PGM_WRITER_HPP
-#define PGM_WRITER_HPP
+#ifndef SEM1_WRITER_PGM_WRITER_HPP
+#define SEM1_WRITER_PGM_WRITER_HPP
 
-#include <writer/IWriter.hpp>
+#include <writer/iWriter.hpp>
 
-class PGMWriter final : public IWriter {
+class pgmWriter final : public iWriter {
 public:
-    void write(const Scene& scene, CanvasSize size, std::ostream& output) const override;
+    void write(const scene& scene, canvasSize size, std::ostream& output) const override;
 };
 
 #endif

@@ -1,16 +1,16 @@
-#include <writer/SVGWriter.hpp>
-#include <writer/SVGShapeVisitor.hpp>
+#include <writer/svgWriter.hpp>
+#include <writer/svgShapeVisitor.hpp>
 
-#include <Scene.hpp>
-#include <error/ApplicationError.hpp>
+#include <scene.hpp>
+#include <error/applicationError.hpp>
 
 #include <ostream>
 #include <stdexcept>
 #include <string>
 
-void SVGWriter::write(
-    const Scene& scene,
-    CanvasSize size,
+void svgWriter::write(
+    const scene& scene,
+    canvasSize size,
     std::ostream& output
 ) const {
     if (size.width <= 0 || size.height <= 0) {
@@ -29,14 +29,14 @@ void SVGWriter::write(
            << "  <g fill=\"none\" stroke=\"black\" stroke-width=\"2\""
               " stroke-linecap=\"round\" stroke-linejoin=\"round\">" << std::endl;
 
-    SVGShapeVisitor visitor{output};
+    svgShapeVisitor visitor{output};
     for (const auto& shape : scene.shapes()) {
         shape->accept(visitor);
     }
 
     output << "  </g>" << std::endl << "</svg>" << std::endl;
     if (!output) {
-        throw ApplicationError{ExitCode::output_error,
+        throw applicationError{exitCode::OUTPUT_ERROR,
             "Chyba pri zapisu SVG vystupu"};
     }
 }

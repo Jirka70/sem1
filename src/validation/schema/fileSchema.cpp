@@ -2,7 +2,7 @@
 
 constexpr size_t MAX_SIZE_B{100'000'000};
 
-const Schema<std::filesystem::path> fileSchema{
+const schema<std::filesystem::path> fileSchema{
     {
         "input",
         "Vstup musi byt bezny soubor",

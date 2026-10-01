@@ -1,13 +1,13 @@
-#include <shape/Rotation.hpp>
-#include <validation/Validation.hpp>
+#include <shape/rotation.hpp>
+#include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
 #include <cmath>
 #include <numbers>
 
-Rotation::Rotation(RotationArgs args)
+rotation::rotation(rotationArgs args)
     : args_(args) {
-    require_validation(rotationSchema, args_);
+    require_validation_t(rotationSchema, args_);
 
     constexpr double FULL_TURN_DEGREES = 360.0;
     constexpr double HALF_TURN_DEGREES = 180.0;
@@ -26,13 +26,13 @@ Rotation::Rotation(RotationArgs args)
     sine_ = std::sin(radians);
 }
 
-Vector2D Rotation::apply(Vector2D point) const {
-    require_validation(vectorSchema, point);
+vector2D rotation::apply(vector2D point) const {
+    require_validation_t(vectorSchema, point);
 
     const double relativeX = point.x - args_.center.x;
     const double relativeY = point.y - args_.center.y;
 
-    const Vector2D result{
+    const vector2D result{
         .x = args_.center.x
             + relativeX * cosine_
             - relativeY * sine_,

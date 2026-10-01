@@ -1,17 +1,17 @@
-#ifndef SCALE_COMMAND_HPP
-#define SCALE_COMMAND_HPP
+#ifndef SEM1_COMMAND_SCALE_COMMAND_HPP
+#define SEM1_COMMAND_SCALE_COMMAND_HPP
 
-#include <command/ICommand.hpp>
-#include <shape/ShapeArgs.hpp>
+#include <command/iCommand.hpp>
+#include <shape/shapeArgs.hpp>
 
-class ScaleCommand final : public ICommand {
+class scaleCommand final : public iCommand {
 public:
-    explicit ScaleCommand(ScaleArgs args);
+    explicit scaleCommand(scaleArgs args);
 
-    void execute(Scene& scene) const override;
+    void execute(scene& scene) const override;
 
 private:
-    ScaleArgs args_;
+    scaleArgs args_;
 };
 
 #endif

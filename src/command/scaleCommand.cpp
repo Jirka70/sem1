@@ -1,14 +1,14 @@
-#include <command/ScaleCommand.hpp>
+#include <command/scaleCommand.hpp>
 
-#include <Scene.hpp>
-#include <validation/Validation.hpp>
+#include <scene.hpp>
+#include <validation/validation.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-ScaleCommand::ScaleCommand(ScaleArgs args)
+scaleCommand::scaleCommand(scaleArgs args)
     : args_(args) {
-    require_validation(scaleSchema, args_);
+    require_validation_t(scaleSchema, args_);
 }
 
-void ScaleCommand::execute(Scene& scene) const {
+void scaleCommand::execute(scene& scene) const {
     scene.scale(args_);
 }

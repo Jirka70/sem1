@@ -1,19 +1,19 @@
-#ifndef I_WRITER_HPP
-#define I_WRITER_HPP
+#ifndef SEM1_WRITER_I_WRITER_HPP
+#define SEM1_WRITER_I_WRITER_HPP
 
-#include <writer/CanvasSize.hpp>
+#include <writer/canvasSize.hpp>
 
 #include <iosfwd>
 
-class Scene;
+class scene;
 
-class IWriter {
+class iWriter {
 public:
-    virtual ~IWriter() = default;
+    virtual ~iWriter() = default;
 
     virtual void write(
-        const Scene& scene,
-        CanvasSize size,
+        const scene& scene,
+        canvasSize size,
         std::ostream& output
     ) const = 0;
 };

@@ -1,17 +1,17 @@
-#ifndef GEOMETRY_SCHEMAS_HPP
-#define GEOMETRY_SCHEMAS_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_GEOMETRY_SCHEMAS_HPP
+#define SEM1_VALIDATION_SCHEMA_GEOMETRY_SCHEMAS_HPP
 
-#include <shape/ShapeArgs.hpp>
-#include <validation/Validation.hpp>
+#include <shape/shapeArgs.hpp>
+#include <validation/validation.hpp>
 
-extern const Schema<Vector2D> vectorSchema;
-extern const Schema<Vector2D> scaleFactorsSchema;
+extern const schema<vector2D> vectorSchema;
+extern const schema<vector2D> scaleFactorsSchema;
 
-extern const Schema<CircleArgs> circleSchema;
-extern const Schema<LineArgs> lineSchema;
-extern const Schema<RectangleArgs> rectangleSchema;
+extern const schema<circleArgs> circleSchema;
+extern const schema<lineArgs> lineSchema;
+extern const schema<rectangleArgs> rectangleSchema;
 
-extern const Schema<RotationArgs> rotationSchema;
-extern const Schema<ScaleArgs> scaleSchema;
+extern const schema<rotationArgs> rotationSchema;
+extern const schema<scaleArgs> scaleSchema;
 
 #endif

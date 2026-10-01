@@ -1,23 +1,23 @@
-#ifndef CIRCLE_COMMAND_HPP
-#define CIRCLE_COMMAND_HPP
+#ifndef SEM1_COMMAND_DRAW_CIRCLE_COMMAND_HPP
+#define SEM1_COMMAND_DRAW_CIRCLE_COMMAND_HPP
 
-#include <command/ICommand.hpp>
-#include <validation/Validation.hpp>
-#include <Scene.hpp>
+#include <command/iCommand.hpp>
+#include <validation/validation.hpp>
+#include <scene.hpp>
 #include <validation/schema/geometrySchemas.hpp>
-#include <shape/Circle.hpp>
+#include <shape/circle.hpp>
 
 
-class DrawCircleCommand final : public ICommand {
+class drawCircleCommand final : public iCommand {
 public: 
-    explicit DrawCircleCommand(const Circle& args) : args_(args) {}
+    explicit drawCircleCommand(const circle& args) : args_(args) {}
 
-    void execute(Scene& scene) const override {
-        scene.add(std::make_unique<Circle>(args_));
+    void execute(scene& scene) const override {
+        scene.add(std::make_unique<circle>(args_));
     }
 
 private:
-    const Circle args_;
+    const circle args_;
 };
 
 #endif

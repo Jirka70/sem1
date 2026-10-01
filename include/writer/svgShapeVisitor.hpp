@@ -1,17 +1,17 @@
-#ifndef SVG_SHAPE_VISITOR_HPP
-#define SVG_SHAPE_VISITOR_HPP
+#ifndef SEM1_WRITER_SVG_SHAPE_VISITOR_HPP
+#define SEM1_WRITER_SVG_SHAPE_VISITOR_HPP
 
-#include <shape/IShapeVisitor.hpp>
+#include <shape/iShapeVisitor.hpp>
 
 #include <iosfwd>
 
-class SVGShapeVisitor final : public IShapeVisitor {
+class svgShapeVisitor final : public iShapeVisitor {
 public:
-    explicit SVGShapeVisitor(std::ostream& output);
+    explicit svgShapeVisitor(std::ostream& output);
 
-    void visit(const Circle& circle) override;
-    void visit(const Line& line) override;
-    void visit(const Rectangle& rectangle) override;
+    void visit(const circle& circle) override;
+    void visit(const line& line) override;
+    void visit(const rectangle& rectangle) override;
 
 private:
     std::ostream& output_;

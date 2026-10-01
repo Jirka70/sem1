@@ -1,31 +1,31 @@
-#ifndef CIRCLE_HPP
-#define CIRCLE_HPP
+#ifndef SEM1_SHAPE_CIRCLE_HPP
+#define SEM1_SHAPE_CIRCLE_HPP
 
-#include <shape/IShape.hpp>
-#include <shape/ShapeArgs.hpp>
+#include <shape/iShape.hpp>
+#include <shape/shapeArgs.hpp>
 
 #include <memory>
 
-class Circle final : public IShape {
+class circle final : public iShape {
 public:
-    explicit Circle(CircleArgs args);
+    explicit circle(circleArgs args);
 
-    void accept(IShapeVisitor& visitor) const override;
+    void accept(iShapeVisitor& visitor) const override;
 
-    Vector2D center() const;
+    vector2D center() const;
 
     double radius() const;
 
-    std::unique_ptr<IShape> operator+(Vector2D offset) const override;
+    std::unique_ptr<iShape> operator+(vector2D offset) const override;
 
-    std::unique_ptr<IShape> operator-(Vector2D offset) const override;
+    std::unique_ptr<iShape> operator-(vector2D offset) const override;
 
-    std::unique_ptr<IShape> operator*(Vector2D factors) const override;
+    std::unique_ptr<iShape> operator*(vector2D factors) const override;
 
-    std::unique_ptr<IShape> rotate(const Rotation& rotation) const override;
+    std::unique_ptr<iShape> rotate(const rotation& rotation) const override;
 
 private:
-    CircleArgs args_{};
+    circleArgs args_{};
 };
 
 #endif

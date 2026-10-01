@@ -1,17 +1,17 @@
-#ifndef ROTATE_COMMAND_HPP
-#define ROTATE_COMMAND_HPP
+#ifndef SEM1_COMMAND_ROTATE_COMMAND_HPP
+#define SEM1_COMMAND_ROTATE_COMMAND_HPP
 
-#include <command/ICommand.hpp>
-#include <shape/ShapeArgs.hpp>
+#include <command/iCommand.hpp>
+#include <shape/shapeArgs.hpp>
 
-class RotateCommand final : public ICommand {
+class rotateCommand final : public iCommand {
 public:
-    explicit RotateCommand(RotationArgs args);
+    explicit rotateCommand(rotationArgs args);
 
-    void execute(Scene& scene) const override;
+    void execute(scene& scene) const override;
 
 private:
-    RotationArgs args_;
+    rotationArgs args_;
 };
 
 #endif

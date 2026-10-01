@@ -4,7 +4,7 @@
 
 namespace fs = std::filesystem;
 
-const Schema<fs::path> outputPathSchema{
+const schema<fs::path> outputPathSchema{
     {
         "output",
         "Vystupni cesta musi obsahovat nazev souboru",

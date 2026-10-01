@@ -1,11 +1,11 @@
-#ifndef COMMAND_LINE_SCHEMA_HPP
-#define COMMAND_LINE_SCHEMA_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_COMMAND_LINE_SCHEMA_HPP
+#define SEM1_VALIDATION_SCHEMA_COMMAND_LINE_SCHEMA_HPP
 
-#include "validation/input/CommandLineInput.hpp"
-#include "validation/Validation.hpp"
+#include "validation/input/commandLineInput.hpp"
+#include "validation/validation.hpp"
 
 
 
-extern const Schema<CommandLineInput> commandLineSchema;
+extern const schema<commandLineInput> commandLineSchema;
 
 #endif

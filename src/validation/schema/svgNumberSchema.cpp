@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-const Schema<double> svgNumberSchema{
+const schema<double> svgNumberSchema{
     {
         "svg_number",
         "SVG hodnota musi byt konecne cislo",

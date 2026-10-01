@@ -1,24 +1,24 @@
-#ifndef SCENE_HPP
-#define SCENE_HPP
+#ifndef SEM1_SCENE_HPP
+#define SEM1_SCENE_HPP
 
 #include <iostream>
 #include <vector>
-#include "shape/IShape.hpp"
-#include "shape/ShapeArgs.hpp"
+#include "shape/iShape.hpp"
+#include "shape/shapeArgs.hpp"
 
-using Shapes = std::vector<std::unique_ptr<IShape>>;
+using shapesType = std::vector<std::unique_ptr<iShape>>;
 
-class Scene {
+class scene {
 public:
-    void add(std::unique_ptr<IShape> shape);
-    void translate(Vector2D offset);
-    void rotate(RotationArgs args);
-    void scale(ScaleArgs args);
+    void add(std::unique_ptr<iShape> shape);
+    void translate(vector2D offset);
+    void rotate(rotationArgs args);
+    void scale(scaleArgs args);
 
-    const std::vector<std::unique_ptr<IShape>>& shapes() const noexcept;
+    const std::vector<std::unique_ptr<iShape>>& shapes() const noexcept;
 
 private:
-    Shapes shapes_;
+    shapesType shapes_;
 };
 
 #endif

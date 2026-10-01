@@ -1,8 +1,8 @@
-#ifndef SVG_NUMBER_SCHEMA_HPP
-#define SVG_NUMBER_SCHEMA_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_SVG_NUMBER_SCHEMA_HPP
+#define SEM1_VALIDATION_SCHEMA_SVG_NUMBER_SCHEMA_HPP
 
-#include <validation/Validation.hpp>
+#include <validation/validation.hpp>
 
-extern const Schema<double> svgNumberSchema;
+extern const schema<double> svgNumberSchema;
 
 #endif

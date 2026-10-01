@@ -1,9 +1,9 @@
-#ifndef CANVAS_SIZE_SCHEMA_HPP
-#define CANVAS_SIZE_SCHEMA_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_CANVAS_SIZE_SCHEMA_HPP
+#define SEM1_VALIDATION_SCHEMA_CANVAS_SIZE_SCHEMA_HPP
 
-#include <validation/Validation.hpp>
-#include <writer/CanvasSize.hpp>
+#include <validation/validation.hpp>
+#include <writer/canvasSize.hpp>
 
-extern const Schema<CanvasSize> canvasSizeSchema;
+extern const schema<canvasSize> canvasSizeSchema;
 
 #endif

@@ -1,27 +1,27 @@
-#include <shape/Line.hpp>
-#include <shape/IShapeVisitor.hpp>
+#include <shape/line.hpp>
+#include <shape/iShapeVisitor.hpp>
 #include <validation/schema/geometrySchemas.hpp>
 
-Line::Line(LineArgs args) : args_(args) {
-    require_validation(lineSchema, args_);
+line::line(lineArgs args) : args_(args) {
+    require_validation_t(lineSchema, args_);
 }
 
-void Line::accept(IShapeVisitor& visitor) const {
+void line::accept(iShapeVisitor& visitor) const {
     visitor.visit(*this);
 }
 
-Vector2D Line::start() const {
+vector2D line::start() const {
     return args_.start;
 }
 
-Vector2D Line::end() const {
+vector2D line::end() const {
     return args_.end;
 }
 
-std::unique_ptr<IShape> Line::operator+(Vector2D offset) const {
-    require_validation(vectorSchema, offset);
+std::unique_ptr<iShape> line::operator+(vector2D offset) const {
+    require_validation_t(vectorSchema, offset);
 
-    const LineArgs result{
+    const lineArgs result{
         .start = {
             .x = args_.start.x + offset.x,
             .y = args_.start.y + offset.y
@@ -32,18 +32,18 @@ std::unique_ptr<IShape> Line::operator+(Vector2D offset) const {
         }
     };
 
-    return std::make_unique<Line>(result);
+    return std::make_unique<line>(result);
 }
 
-std::unique_ptr<IShape> Line::operator-(Vector2D offset) const {
-    require_validation(vectorSchema, offset);
-    return *this + Vector2D{-offset.x, -offset.y};
+std::unique_ptr<iShape> line::operator-(vector2D offset) const {
+    require_validation_t(vectorSchema, offset);
+    return *this + vector2D{-offset.x, -offset.y};
 }
 
-std::unique_ptr<IShape> Line::operator*(Vector2D factors) const {
-    require_validation(scaleFactorsSchema, factors);
+std::unique_ptr<iShape> line::operator*(vector2D factors) const {
+    require_validation_t(scaleFactorsSchema, factors);
 
-    const LineArgs result{
+    const lineArgs result{
         .start = {
             .x = args_.start.x * factors.x,
             .y = args_.start.y * factors.y
@@ -54,14 +54,14 @@ std::unique_ptr<IShape> Line::operator*(Vector2D factors) const {
         }
     };
 
-    return std::make_unique<Line>(result);
+    return std::make_unique<line>(result);
 }
 
-std::unique_ptr<IShape> Line::rotate(const Rotation& rotation) const {
-    const LineArgs result{
+std::unique_ptr<iShape> line::rotate(const rotation& rotation) const {
+    const lineArgs result{
         .start = rotation.apply(args_.start),
         .end = rotation.apply(args_.end)
     };
 
-    return std::make_unique<Line>(result);
+    return std::make_unique<line>(result);
 }

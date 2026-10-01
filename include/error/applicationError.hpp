@@ -1,20 +1,20 @@
-#ifndef APPLICATION_ERROR_HPP
-#define APPLICATION_ERROR_HPP
+#ifndef SEM1_ERROR_APPLICATION_ERROR_HPP
+#define SEM1_ERROR_APPLICATION_ERROR_HPP
 
 #include <stdexcept>
-#include <ExitCode.hpp>
+#include <exitCode.hpp>
 
 
-class ApplicationError : public std::runtime_error {
+class applicationError : public std::runtime_error {
 public:
-    ApplicationError(ExitCode code, const std::string& message) : std::runtime_error(message), code_(code) {}
+    applicationError(exitCode code, const std::string& message) : std::runtime_error(message), code_(code) {}
 
-    ExitCode code() const noexcept {    
+    exitCode code() const noexcept {    
         return code_;
     }
 
 private:
-    ExitCode code_;
+    exitCode code_;
 };
 
 #endif

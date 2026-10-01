@@ -1,5 +1,5 @@
 #include <validation/schema/tokens/lineTokensSchema.hpp>
-#include <util/parse/Number.hpp>
+#include <util/parse/number.hpp>
 
 #include <cmath>
 #include <cstddef>
@@ -10,11 +10,11 @@ constexpr std::size_t START_Y_INDEX = 2;
 constexpr std::size_t END_X_INDEX = 3;
 constexpr std::size_t END_Y_INDEX = 4;
 
-const Schema<Tokens> lineTokensSchema{
+const schema<tokens> lineTokensSchema{
     {
         "arguments",
         "Ocekavany format: line <x1> <y1> <x2> <y2>",
-        [](const Tokens& tokens) {
+        [](const tokens& tokens) {
             return tokens.size() == EXPECTED_TOKEN_COUNT
                 && tokens.front() == "line";
         }
@@ -22,9 +22,9 @@ const Schema<Tokens> lineTokensSchema{
     {
         "start",
         "Souradnice pocatecniho bodu musi byt konecna cisla",
-        [](const Tokens& tokens) {
-            const auto x = parse_number<double>(tokens[START_X_INDEX]);
-            const auto y = parse_number<double>(tokens[START_Y_INDEX]);
+        [](const tokens& tokens) {
+            const auto x = parse_number_t<double>(tokens[START_X_INDEX]);
+            const auto y = parse_number_t<double>(tokens[START_Y_INDEX]);
 
 
             return x.has_value() && y.has_value()
@@ -34,9 +34,9 @@ const Schema<Tokens> lineTokensSchema{
     {
         "end",
         "Souradnice koncoveho bodu musi byt konecna cisla",
-        [](const Tokens& tokens) {
-            const auto x = parse_number<double>(tokens[END_X_INDEX]);
-            const auto y = parse_number<double>(tokens[END_Y_INDEX]);
+        [](const tokens& tokens) {
+            const auto x = parse_number_t<double>(tokens[END_X_INDEX]);
+            const auto y = parse_number_t<double>(tokens[END_Y_INDEX]);
             return x.has_value() && y.has_value()
                 && std::isfinite(x.value()) && std::isfinite(y.value());
         }

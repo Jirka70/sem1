@@ -1,25 +1,25 @@
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
+#ifndef SEM1_APPLICATION_HPP
+#define SEM1_APPLICATION_HPP
 
 #include <cstddef>
 #include <string>
-#include <ExitCode.hpp>
+#include <exitCode.hpp>
 
-enum class ApplicationStatus {
+enum class applicationStatus {
     OK,
     FAILURE
 };
 
-struct ApplicationResult {
-    ApplicationStatus status;
-    ExitCode exitCode;
+struct applicationResult {
+    applicationStatus status;
+    ::exitCode exitCode;
     std::size_t processed_lines;
     std::string error_message;
 };
 
-class Application {
+class application {
 public: 
-    ApplicationResult run(int argc, char* argv[]);
+    applicationResult run(int argc, char* argv[]);
 };
 
 #endif

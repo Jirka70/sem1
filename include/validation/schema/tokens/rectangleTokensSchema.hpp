@@ -1,9 +1,9 @@
-#ifndef RECTANGLE_TOKENS_SCHEMA_HPP
-#define RECTANGLE_TOKENS_SCHEMA_HPP
+#ifndef SEM1_VALIDATION_SCHEMA_TOKENS_RECTANGLE_TOKENS_SCHEMA_HPP
+#define SEM1_VALIDATION_SCHEMA_TOKENS_RECTANGLE_TOKENS_SCHEMA_HPP
 
-#include <command/parse/parse_command.hpp>
-#include <validation/Validation.hpp>
+#include <command/parse/parseCommand.hpp>
+#include <validation/validation.hpp>
 
-extern const Schema<Tokens> rectangleTokensSchema;
+extern const schema<tokens> rectangleTokensSchema;
 
 #endif

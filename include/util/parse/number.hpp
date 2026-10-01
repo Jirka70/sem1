@@ -1,5 +1,5 @@
-#ifndef PARSE_NUMBER_HPP
-#define PARSE_NUMBER_HPP
+#ifndef SEM1_UTIL_PARSE_NUMBER_HPP
+#define SEM1_UTIL_PARSE_NUMBER_HPP
 
 #include <iostream>
 #include <charconv>
@@ -8,8 +8,8 @@
 #include <string_view>
 
 
-template<typename T> 
-requires (std::same_as<T, int> || std::same_as<T, double> || std::same_as<T, float>)
-std::optional<T> parse_number(std::string_view text);
+template<typename valueType> 
+requires (std::same_as<valueType, int> || std::same_as<valueType, double> || std::same_as<valueType, float>)
+std::optional<valueType> parse_number_t(std::string_view text);
 
 #endif
