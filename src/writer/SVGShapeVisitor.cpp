@@ -39,7 +39,7 @@ void SVGShapeVisitor::visit(const Circle& circle) {
     const Vector2D center = circle.center();
     output_ << "    <circle cx=\"" << svg_number(center.x)
             << "\" cy=\"" << svg_number(center.y)
-            << "\" r=\"" << svg_number(circle.radius()) << "\" />\n";
+            << "\" r=\"" << svg_number(circle.radius()) << "\" />" << std::endl;
 }
 
 void SVGShapeVisitor::visit(const Line& line) {
@@ -48,7 +48,7 @@ void SVGShapeVisitor::visit(const Line& line) {
     output_ << "    <line x1=\"" << svg_number(start.x)
             << "\" y1=\"" << svg_number(start.y)
             << "\" x2=\"" << svg_number(end.x)
-            << "\" y2=\"" << svg_number(end.y) << "\" />\n";
+            << "\" y2=\"" << svg_number(end.y) << "\" />" << std::endl;
 }
 
 void SVGShapeVisitor::visit(const Rectangle& rectangle) {
@@ -62,5 +62,5 @@ void SVGShapeVisitor::visit(const Rectangle& rectangle) {
         output_ << svg_number(corner.x) << ',' << svg_number(corner.y);
         first = false;
     }
-    output_ << "\" />\n";
+    output_ << "\" />" << std::endl;
 }

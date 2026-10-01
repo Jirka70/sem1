@@ -19,10 +19,11 @@ void PGMWriter::write(
         shape->accept(visitor);
     }
 
-    output << "P5\n"
-           << std::to_string(size.width) << ' '
-           << std::to_string(size.height)
-           << "\n255\n";
+    output << "P5"
+        << std::endl
+        << std::to_string(size.width) << ' '
+        << std::to_string(size.height)
+        << std::endl << "255" << std::endl;
 
     for (const unsigned char pixel : visitor.pixels()) {
         output.put(static_cast<char>(pixel));
